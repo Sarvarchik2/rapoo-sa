@@ -1,0 +1,14 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Helmet base -->
+  <path d="M20 35C20 25 28 17 38 17H42C52 17 60 25 60 35V45C60 55 52 63 42 63H38C28 63 20 55 20 45V35Z" fill="#FFD700" stroke="#FF6B35" stroke-width="2"/>
+  
+  <!-- Helmet visor -->
+  <path d="M25 40C25 35 30 30 36 30H44C50 30 55 35 55 40V42C55 47 50 52 44 52H36C30 52 25 47 25 42V40Z" fill="#1E293B"/>
+  
+  <!-- Helmet details -->
+  <circle cx="32" cy="38" r="2" fill="#FFD700"/>
+  <circle cx="48" cy="38" r="2" fill="#FFD700"/>
+  
+  <!-- Text "CA" -->
+  <text x="40" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1E293B">CA</text>
+</svg> 

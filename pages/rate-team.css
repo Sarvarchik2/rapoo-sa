@@ -1,0 +1,244 @@
+.rate-team{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.back-nav {
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-white);
+    border-radius: 30px;
+    border: none;
+    padding: 12px 20px;
+    color: var(--text-blue);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #dee2e6;
+    transform: translateX(-4px);
+}
+
+.back-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+    transform: translateX(-2px);
+}
+
+.rate-team-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-white);
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.rate-team-top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.rate-team-top h2{
+    font-size: 40px;
+    color: var(--text-black);
+}
+.rate-team-top img{
+    width: 80px;
+}
+
+.rate-team-game{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.rate-team-game h2{
+    font-size: 40px;
+    color: var(--text-blue);
+}
+.rate-team-game img{
+    width: 80px;
+}
+.rate-team-link{
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+
+}
+.rate-team-link-item{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.rate-team-link-item img{
+    width: 40px;
+    height: 40px;
+
+}
+.rate-team-link-item {
+    font-size: 25px;
+    color: var(--text-black);
+    font-weight: 600;
+}
+
+.rate-team-title{
+    font-size: 30px;
+    color: var(--text-bold-blue);
+    margin-top: 30px;
+
+}
+
+.rate-team-reestr{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+}
+.rate-team-reestr::before {
+    content: '';
+    display: block;
+    width: 80%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: linear-gradient(
+        to right, 
+        #9FD3FE 50%, 
+        transparent 100%
+    );
+}
+
+.rate-team-reestr-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+.rate-team-reestr-top{
+    color: var(--text-white);
+    z-index: 2;
+    font-weight: 700;
+
+}
+.rate-team-reestr-wrapper{
+    z-index: 2;
+    color: var(--text-white);
+    font-weight: 600;
+    gap: 20px;
+    margin-top: 20px;
+    display: flex;
+
+}
+.rate-team-reestr-top{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.rate-team-reestr-top img{
+    width: 60px;
+}
+.rate-team-reestr-left{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+}
+.rate-team-reestr-left h3{
+    width: 50%;
+    font-size: 30px;
+    margin-bottom: 40px;
+}
+.rate-team-reestr-left h4{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.rate-team-reestr-right{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 20px;
+    background: var(--bg-blue);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+@media (max-width:1025px) {
+    .rate-team-reestr-left h3{
+        font-size: 21px;
+        width: 100%;
+    }
+}
+
+@media (max-width:521px) {
+    .rate-team-reestr-wrapper{
+        flex-direction: column;
+    }
+    .rate-team-reestr-right{
+        width: 100%;
+    }
+    .rate-team-reestr-left h4{
+        font-size: 14px;
+    }
+    .rate-team-reestr-left{
+        width: 100%;
+    }
+    .rate-team-reestr{
+        padding: 10px;
+    }
+    .main-interest-item-info-text img{
+        width: 70px;
+        height: 70px;
+    }
+    .main-interest-item-info-text h3{
+        font-size: 14px;
+    }
+    .rate-team-top h2{
+        font-size: 20px;
+    }
+    .rate-team-top img{
+        width: 50px;
+    }
+    .rate-team-game h2{
+        font-size: 24px;
+    }
+    .rate-team-game img{
+        width: 50px;
+    }
+    .rate-team-link-item{
+        font-size: 16px;
+    }
+    .rate-team-link-item img{
+        width: 30px;
+    }
+    .rate-team-link{
+        gap: 0;
+        justify-content: space-between;
+    }
+}

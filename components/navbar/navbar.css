@@ -1,0 +1,138 @@
+.navbar{
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 100px);
+    height: 78px;
+    border-radius: 50px;
+    padding: 13px 18px;
+    background-color: var(--bg-white);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    /* Размытая тень снизу */
+    box-shadow: 
+    0 30px 30px #F6F6F6,
+    40px 12px 20px #F6F6F6;
+    
+    /* Четкая тень сверху */
+}
+
+.navbar-logo{
+    width: 240px;
+text-decoration: none;
+}
+.navbar-logo img{
+    width: 100%;
+}
+.navbar-center{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    height: 100%;
+}
+.navbar-search{
+    width: 300px;
+    height: 100%;
+    border-radius: 50px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    padding: 13px 18px;
+    padding-left: 45px;
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+.navbar-search img{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.navbar-search input{
+    width: 100%;
+    border: none;
+    outline: none;
+    height: 100%;
+}
+
+.navbar-shop-cart{
+    display: flex;
+    background-color: var(--bg-orange);
+    border-radius: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 85px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+.navbar-shop-cart img{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.navbar-right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+.navbar-right-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navbar-right-item button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.navbar-right-item a{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.navbar-right-avatar{
+    width: 50px;
+}
+
+@media (max-width: 1025px) {
+    .navbar-search{
+        width: 200px;
+    }
+    .navbar-shop-cart{
+        padding: 0 69px;
+    }
+    .navbar-logo{
+        width: 200px;
+    }
+}
+@media (max-width: 769px) {
+    .navbar{
+       position: static;
+       width: 100%;
+       top: 0;
+       left: 0;
+       transform: none;
+       box-shadow: none;
+    }
+    .navbar-center{
+        display: none;
+    }
+    .navbar-right-item{
+        display: none;
+    }
+}

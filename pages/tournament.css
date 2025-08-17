@@ -1,0 +1,372 @@
+.turnirs-preview {
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+}
+
+.match-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 140px;
+}
+.match-info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+}
+.match-info h2{
+    font-size: 30px;
+    text-align: center;
+    color: var(--text-bold-blue);
+    margin-top: 20px;
+}
+.team-wrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.tournaments-more-back{
+    text-decoration: none;
+    color: var(--text-blue);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    width: max-content;
+    margin-bottom: 20px;
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background 0.3s ease;
+}
+
+.tournaments-more-back:hover{
+    background: var(--text-blue-btn);
+    color: var(--text-white);
+}
+
+.tournaments-more-back img{
+    width: 20px;
+    height: 20px;
+    transform: rotate(180deg);
+}
+
+.team-wrapper h3{
+    font-size: 80px;
+    letter-spacing: 50px;
+}
+.team{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+.team h5{
+    font-size: 30px;
+}
+.match-info-bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+.match-info-bottom h3{
+    font-size: 30px;
+    color:  var(--text-bold-blue);
+}
+.match-info-bottom h4{
+    font-size: 20px;
+}
+.team .team-logo{
+    width: 150px;
+    height: auto;
+}
+.team .team-logo img{
+    width: 100%;
+}
+
+.main-interest{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 45px;
+    margin-top: 45px;
+  }
+  .main-interest h2{
+    color: var(--text-bold-blue);
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .main-interest-wrapper{
+    display: flex;
+    width: 100%;
+    gap: 15px;
+  }
+  .main-interest-item{
+    width: 33%;
+    background-color: var(--bg-white);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  
+  }
+  .main-interest-item-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+  }
+  .main-interest-item-img{
+    width: 50px;
+    height: 50px;
+  }
+  .main-interest-item-info-line{
+    font-size: 26px;
+    color: var(--text-bold-blue);
+    font-weight: 700;
+  }
+  .main-interest-item-info-text img{
+    width: 100px;
+    height: 100px;
+  
+  }
+  
+  .main-interest-item-info-text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .main-interest-item-info-text h3{
+    color: var(--text-black);
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .main-interest-item-link{
+    color: var(--text-white);
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--text-blue-btn);
+    border-radius: 30px;
+    padding: 10px 40px;
+  }
+  .main-interest-link{
+    color: var(--text-white);
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--text-blue-btn);
+    border-radius: 30px;
+    padding: 10px 20px;
+  }
+  .main-interest-link img{
+    width: 15px;
+    height: 15px;
+  }
+  
+.turnisrview-team{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+.turnisrview-team h2{
+    font-size: 30px;
+    color: var(--text-bold-blue);
+    margin-bottom: 30px;
+}
+.turnisrview-team-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.turnisrview-team-wrapper h3{
+    font-size: 30px;
+    display: flex;
+    margin-top: 30px;
+
+    align-items:center;
+}
+.turnisrview-team-wrapper h3 img{
+    width: 50px;
+}
+.turnisrview-team-content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.turnisrview-team-item{
+    width: 19%;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.turnisrview-team-item img{
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.turnisrview-team-item-text::before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: 0;
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 25%;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, #87C9FF);
+    z-index: 2;
+    pointer-events: none;
+  }
+.turnisrview-team-item-text{
+    width: 100%;
+    padding: 10px;
+    background: var(--bg-blue);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center ;
+}
+
+.turnisrview-team-item-text span{
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    font-weight: 700;
+    color: var(--text-white);
+    gap: 10px;
+}
+.turnisrview-team-item-text span img{
+    width: 20px;
+}
+.turnisrview-team-item-text h4{
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-white);
+
+
+}
+.turnisrview-team-item-text h5{
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-white);
+
+
+}
+.turnisrview-viedo{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.turnisrview-viedo h2{
+    font-size: 30px;
+    color: var(--text-bold-blue);
+}
+.turnisrview-viedo iframe{
+    width: 100%;
+    height: 450px;
+    border-radius: 30px;
+}
+
+
+
+@media (max-width:1025px) {
+    .turnisrview-team-item{
+        width: 30%;
+    }
+    .turnisrview-team-content{
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .match-container{
+        padding: 20px;
+    }
+    .team-wrapper h3 {
+        font-size: 66px;
+        letter-spacing: 23px;
+    }
+    .team .team-logo{
+        width: 110px;
+    }
+    .match-info-bottom h3 {
+        font-size: 24px;
+    }
+    .match-info-bottom h4 {
+        font-size: 18px;
+    }
+    .main-interest-wrapper{
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .main-interest-item{
+        width: 48%;
+      }
+    
+}
+
+@media (max-width: 521px) {
+    .match-container{
+        padding: 0;
+    }
+    .main-interest-item{
+        width: 100%;
+      }
+    .team-wrapper h3 {
+        font-size: 32px;
+        letter-spacing: 8px;
+    }
+    .team .team-logo {
+        width: 60px;
+    }
+    .team h5 {
+        font-size: 22px;
+    }
+    .match-info h2 {
+        font-size: 22px;
+    }
+
+    .team-wrapper h3 {
+        font-size: 29px;
+        letter-spacing: 5px;
+    }
+    .turnisrview-team-item{
+        width: 48%;
+    }
+}
+
+@media (max-width:480px) {
+    .turnisrview-team-item{
+        width: 100%;
+    }
+}

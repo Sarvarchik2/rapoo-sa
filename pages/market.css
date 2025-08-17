@@ -1,0 +1,237 @@
+  .cyber-market{
+    background: var(--bg-primary);
+  }
+  
+  .cyber-market-back{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    background: var(--bg-white);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 9999px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform .06s ease, box-shadow .2s ease, filter .2s ease;
+    margin-bottom: 14px;
+  }
+  .cyber-market-back svg{ color: var(--text-bold-blue); }
+  .cyber-market-back:hover{ box-shadow: var(--shadow); filter: brightness(.98); }
+  .cyber-market-back:active{ transform: translateY(1px); }
+  
+  .cyber-promos-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "steam steam codes"
+      "fc25  fc25  gifts";
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .cyber-promo-card{
+    position: relative;
+    overflow: hidden;
+    min-height: 240px;
+    background: var(--bg-white);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    transition: box-shadow .25s ease, transform .06s ease;
+    display: flex;
+    align-items: end;
+  }
+  .cyber-promo-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* мягкое затемнение низа */
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 55%,
+      rgba(0, 0, 0, 0.686) 100%
+    );
+    pointer-events: none;
+    z-index: 1;              /* выше картинки */
+    opacity: 1;
+    transition: opacity .2s ease;
+  }
+  .cyber-promo-card:hover{ box-shadow: var(--shadow-lg); }
+  .cyber-promo-card:active{ transform: translateY(1px); }
+  
+  .cyber-promo-text{
+    position: relative;
+    z-index: 2;
+    padding: 18px 20px;
+    color: var(--text-white);
+  }
+  .cyber-promo-text h3{
+    font-size: 22px;
+    line-height: 1.1;
+    margin: 0 0 6px;
+    font-weight: 800;
+  }
+  .cyber-promo-text p{
+    font-size: 14px;
+    opacity: .9;
+    margin: 0;
+  }
+  .cyber-promo-text--shadow h3,
+  .cyber-promo-text--shadow p{
+    text-shadow: 0 6px 24px rgba(0,0,0,.35);
+  }
+  
+  /* общие картинки */
+  .cyber-promo-img-right{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(48%, 320px);
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 12px 28px rgba(0,0,0,.25));
+  }
+  .cyber-promo-img-cover{
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: .96;
+  }
+  
+  /* стрелка */
+  .cyber-promo-arrow{
+    position: absolute;
+    right: 14px; bottom: 12px;
+    z-index: 3;
+    display: inline-grid;
+    place-items: center;
+    width: 34px; height: 34px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,.18);
+    backdrop-filter: blur(6px);
+    color: var(--text-white);
+    font-weight: 900;
+    box-shadow: 0 10px 28px rgba(0,0,0,.15);
+  }
+  
+  /* Варианты карточек по сетке — градиенты из твоих цветов */
+  .cyber-promo-steam{
+    grid-area: steam;
+    background: radial-gradient(140% 100% at 0% 0%,
+                var(--bg-blue) 0%,
+                var(--text-bold-blue) 60%,
+                #1b47d6 100%);
+  }
+  .cyber-promo-codes{
+    grid-area: codes;
+    background: radial-gradient(120% 100% at 100% 0%,
+                var(--bg-blue) 0%,
+                var(--text-bold-blue) 55%,
+                #1b47d6 100%);
+  }
+  .cyber-promo-fc25{
+    grid-area: fc25;
+    background: #111; /* перекроется картинкой */
+    color: var(--text-white);
+    min-height: 357px;
+
+  }
+  .cyber-promo-gifts{
+    grid-area: gifts;
+    background: radial-gradient(120% 100% at 100% 0%,
+                #9bd4ff 0%,
+                var(--bg-blue) 45%,
+                var(--text-bold-blue) 100%);
+  }
+  .cyber-promo-gifts .cyber-promo-img-right{
+    width: 100%;
+  }
+  
+  /* ======= СЕТКА ИГР ======= */
+  .cyber-games{ margin-top: 4px; }
+  .cyber-games-grid{
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .cyber-game-card{
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    /* aspect-ratio: 1 / 1; */
+    -webkit-box-shadow: 0px -88px 38px -12px rgba(0, 0, 0, 0.25) inset;
+    -moz-box-shadow: 0px -88px 38px -12px rgba(0, 0, 0, 0.25) inset;
+    box-shadow: 0px -88px 38px -12px rgba(0, 0, 0, 0.25) inset;
+  }
+  .cyber-game-card:hover{ 
+    cursor: pointer;
+    box-shadow: none;
+   }
+   .cyber-game-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* мягкое затемнение низа */
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 55%,
+      rgba(0, 0, 0, 0.686) 100%
+    );
+    pointer-events: none;
+    z-index: 1;              /* выше картинки */
+    opacity: 1;
+    transition: opacity .2s ease;
+  }
+  
+  .cyber-game-card:active{ transform: translateY(1px); }
+  
+  .cyber-game-card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .cyber-game-label{
+    position: absolute;
+    left: 10px; bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    z-index: 2;
+    border-radius: 9999px;
+    /* background: rgba(255,255,255,.88); */
+    color: var(--text-white);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: .2px;
+    /* box-shadow: var(--shadow); */
+  }
+  .cyber-game-label svg{ color: var(--text-white); }
+  
+  /* ======= АДАПТИВ ======= */
+  @media (max-width: 1100px){
+    .cyber-promos-grid{
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "steam steam"
+        "fc25  fc25"
+        "codes gifts";
+    }
+    .cyber-games-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 720px){
+    .cyber-promo-text h3{ font-size: 20px; }
+    .cyber-promos-grid{ grid-template-columns: 1fr; grid-template-areas: "steam" "fc25" "codes" "gifts"; }
+    .cyber-promo-card{ min-height: 132px; }
+    .cyber-games-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 420px){
+    .cyber-games-grid{ grid-template-columns: 1fr; }
+  }

@@ -1,0 +1,120 @@
+/* Switcher Styles */
+.switcher {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.switcher-container {
+    position: relative;
+    display: flex;
+    background: #fff;
+    border-radius: 30px;
+    gap: 8px;
+    padding: 4px;
+}
+
+.switcher-btn {
+    position: relative;
+    padding: 15px 24px;
+    border: none;
+    border-radius: 26px;
+    background: transparent;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    white-space: nowrap;
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
+.switcher-btn:hover {
+    color: #495057;
+    transform: translateY(-1px);
+}
+
+.switcher-btn.active {
+    color: #fff;
+    font-weight: 700;
+}
+
+.switcher-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    background: #007bff;
+    border-radius: 26px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+/* Responsive Design for Switcher */
+@media (max-width: 768px) {
+    .switcher {
+        margin-bottom: 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    .switcher::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    
+    .switcher-container {
+        display: flex;
+        gap: 6px;
+        min-width: max-content;
+        border-radius: 20px;
+    }
+    
+    .switcher-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-width: 80px;
+        white-space: nowrap;
+        border-radius: 16px;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .switcher-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .switcher-btn.active {
+        color: #fff;
+        font-weight: 700;
+        transform: scale(1.05);
+    }
+    
+    .switcher-slider {
+        height: calc(100% - 8px);
+        top: 4px;
+        border-radius: 16px;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .switcher-container {
+        gap: 6px;
+    }
+    
+    .switcher-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+        min-width: 70px;
+    }
+    
+    .switcher-slider {
+        height: calc(100% - 8px);
+        top: 4px;
+    }
+}

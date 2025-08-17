@@ -1,0 +1,18 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield base -->
+  <path d="M40 15L50 20V35C50 45 45 55 40 65C35 55 30 45 30 35V20L40 15Z" fill="#3B82F6" stroke="#1E40AF" stroke-width="2"/>
+  
+  <!-- Shield inner -->
+  <path d="M40 20L47 24V35C47 42 43 49 40 58C37 49 33 42 33 35V24L40 20Z" fill="#60A5FA"/>
+  
+  <!-- Circuit lines -->
+  <path d="M35 30H45M35 35H45M35 40H45" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Tech dots -->
+  <circle cx="35" cy="25" r="2" fill="#FFD700"/>
+  <circle cx="45" cy="25" r="2" fill="#FFD700"/>
+  <circle cx="40" cy="45" r="2" fill="#FFD700"/>
+  
+  <!-- Text "CY" -->
+  <text x="40" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#1E293B">CY</text>
+</svg> 

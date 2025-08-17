@@ -1,0 +1,50 @@
+.cyber-olam{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.cyber-olam-content{
+    width: 100%;
+    display: flex;
+    padding-top: 117px;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+    gap: 23px;
+}
+
+/* Добавляем фон для области сверху навбара */
+.cyber-olam::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: var(--bg-primary);
+    z-index: 99;
+    pointer-events: none;
+}
+.cyber-olam-content-wrapper{
+    width: calc(100% - 220px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* Мобильная версия */
+@media (max-width: 769px) {
+.cyber-olam-content-wrapper{
+    width: 100%;
+}
+    .cyber-olam-content {
+        padding-top: 0; 
+        gap: 0; 
+    }
+    
+    .cyber-olam::before {
+        display: none;
+    }
+}

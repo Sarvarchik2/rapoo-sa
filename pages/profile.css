@@ -1,0 +1,294 @@
+.profile-page {
+  min-height: 100vh;
+}
+
+.profile-user-card {
+  background: #4285F4;
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: start;
+  gap: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(66, 133, 244, 0.3);
+}
+
+.profile-user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.profile-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-user-info {
+  flex: 1;
+}
+
+.profile-user-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+
+.profile-user-username {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  opacity: 0.9;
+}
+
+.profile-user-date {
+  font-size: 14px;
+  color: #ffffff;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.profile-user-edit {
+  background: transparent;
+  border-radius: 8px;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  gap: 8px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+
+.profile-user-edit svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Content Sections */
+.profile-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+  
+}
+
+.profile-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  
+}
+
+.profile-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #4285F4;
+  margin: 0 0 20px 0;
+}
+
+/* Personal Data Section */
+.profile-personal-data {
+  min-height: 200px;
+  background: #FFF;
+background: linear-gradient(160deg, rgba(255, 255, 255, 1) 42%, rgba(128, 197, 253, 1) 100%);
+}
+
+/* Team Section */
+.profile-team {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  background: #FFF;
+background: linear-gradient(160deg, rgba(255, 255, 255, 1) 42%, rgba(128, 197, 253, 1) 100%);
+}
+
+.profile-team-create {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 44%;
+}
+
+.profile-team-create:hover {
+  transform: translateY(-2px);
+}
+
+.profile-team-create svg {
+  width: 48px;
+  height: 48px;
+  stroke: #4285F4;
+}
+
+.profile-team-create span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4285F4;
+}
+
+/* Achievements Section */
+.profile-achievements {
+  grid-column: 1 / -1;
+  min-height: 200px;
+}
+
+.profile-achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-achievement-item {
+  background: #f8f9fa;
+  border: 2px solid #90CAF9;
+  border-radius: 100px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-achievement-trophy {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-achievement-trophy svg {
+  width: 32px;
+  height: 32px;
+}
+
+.trophy-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: #90CAF9;
+}
+
+.profile-achievement-logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.profile-achievement-logo-bg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.profile-achievement-logo-bg::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: #000;
+  border-radius: 50%;
+}
+
+.profile-achievement-text {
+  flex: 1;
+  justify-content: space-between;
+  display: flex;
+  gap: 4px;
+}
+
+.profile-achievement-team {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.profile-achievement-tournament {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-blue);
+}
+.profile-match{
+  background: var(--bg-white);
+  border-radius: 30px;
+  margin-top: 20px;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  
+  .profile-user-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .profile-user-edit {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .profile-sections {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .profile-achievement-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}
+@media (max-width: 520px) {
+    .profile-achievement-item{
+        border-radius: 10px;
+    }
+    .profile-achievement-text{
+        flex-direction: column;
+    }
+    .profile-team-create{
+        margin: 0;
+        width: 100%;
+    }
+    .profile-user-card{
+      align-items: center;
+    }
+    .profile-match{
+      padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+  .profile-user-name {
+    font-size: 24px;
+  }
+  
+  .profile-user-username {
+    font-size: 16px;
+  }
+  
+  .profile-section {
+    padding: 20px;
+  }
+}
