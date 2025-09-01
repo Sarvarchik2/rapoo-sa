@@ -1,0 +1,424 @@
+.create-tournament{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.create-tournament-format{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+
+}
+.create-tournament-format h2{
+    color: var(--text-bold-blue);
+}
+.create-tournament-format-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.create-tournament-format-item{
+    width: 30%;
+    background: var(--bg-white);
+    padding: 30px 20px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+}
+.create-tournament-format-item h3{
+    font-size: 22px;
+    color: var(--text-bold-blue);
+}
+.create-tournament-format-item img{
+   height: 130px;
+}
+.create-tournament-format-item p{
+    color: var(--text-grey);
+    text-align: center;
+    font-size: 16px;
+}
+/* Карточка формата интерактивна */
+.create-tournament-format-item{
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow .18s ease, transform .12s ease, border-color .18s ease, background-color .18s ease;
+    border: 2px solid transparent;
+  }
+  .create-tournament-format-item:hover{
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  }
+  .create-tournament-format-item:active{
+    transform: translateY(1px);
+  }
+  
+  /* Индикатор выбора (радио-точка в левом верхнем углу) */
+  .format-check{
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 2px #93c5fd;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    transition: box-shadow .18s ease;
+  }
+  .format-check__dot{
+    width: 0;
+    height: 0;
+    border-radius: 999px;
+    background: #3b82f6;
+    transition: width .18s ease, height .18s ease, transform .18s ease;
+    transform: scale(0);
+  }
+  
+  /* Выбранная карточка */
+  .create-tournament-format-item.is-selected{
+    border-color: #3b82f6;
+    background: #ffffff;
+    box-shadow: 0 10px 26px rgba(59,130,246,.12);
+  }
+  .create-tournament-format-item.is-selected .format-check{
+    box-shadow: inset 0 0 0 11px rgba(147,197,253,.4);
+  }
+  .create-tournament-format-item.is-selected .format-check__dot{
+    width: 10px;
+    height: 10px;
+    transform: scale(1);
+  }
+  
+  /* Фокус клавиатуры */
+  .create-tournament-format-item:focus-visible{
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(59,130,246,.22);
+  }
+  
+
+/* ===== Double Elimination Settings ===== */
+.de-settings{
+    width: 100%;
+    margin-top: 24px;
+  }
+  
+  .de-title{
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--text-bold-blue, #2563eb);
+    margin: 0 0 20px;
+  }
+  
+  /* Контейнер-лейбл — кликабелен целиком */
+  .de-toggle{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: transparent;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* скрываем нативный чекбокс */
+  .de-toggle-input{
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+  
+  /* Трек свитчера */
+  .de-toggle-track{
+    position: relative;
+    width: 66px;
+    height: 36px;
+    border-radius: 999px;
+    background: #e5e7eb; /* off */
+    transition: background-color 220ms ease, box-shadow 220ms ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+  }
+  
+  /* Бегунок */
+  .de-toggle-thumb{
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition:
+      transform 220ms cubic-bezier(.22,.61,.36,1),
+      width 140ms ease,
+      left 220ms ease;
+  }
+  
+  /* Нажатие — лёгкая анимация расширения */
+  .de-toggle:active .de-toggle-thumb{
+    width: 30px;
+  }
+  
+  /* Состояние ВКЛ */
+  .de-toggle.is-on .de-toggle-track{
+    background: #60a5fa; /* голубой фон */
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .de-toggle.is-on .de-toggle-thumb{
+    transform: translateX(30px);
+  }
+  
+  /* Фокус-кольцо для клавиатуры */
+  .de-toggle:focus-visible .de-toggle-track{
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.25), inset 0 2px 4px rgba(0,0,0,0.06);
+  }
+  
+  /* Текстовая часть */
+  .de-toggle-texts{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .de-toggle-label{
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary, #1f2937);
+  }
+  .de-toggle-sub{
+    font-size: 16px;
+    color: #94a3b8; /* серый как на скрине */
+    line-height: 1.4;
+  }/* ===== Основные данные турнира ===== */
+.tournament-basic{
+    width: 100%;
+    margin-top: 28px;
+    background: #f6f7f9; /* очень светло-серый фон блока как на скрине */
+    border-radius: 16px;
+  }
+  
+  .tb-title{
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text-bold-blue, #2563eb);
+    margin: 14px 0 12px;
+  }
+  
+  /* Счётчик участников */
+  .tb-counter{
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 6px 10px;
+    gap: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    margin: 6px 0 28px;
+  }
+  .tb-btn{
+    width: 44px;
+    height: 36px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    color: #6b7280;
+    cursor: pointer;
+    transition: transform 120ms ease, background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+  }
+  .tb-btn:hover{ background: #eef2ff; color: #2563eb; }
+  .tb-btn:active{ transform: scale(0.94); }
+  .tb-btn:disabled{ opacity: .35; cursor: not-allowed; }
+  .tb-value{
+    min-width: 32px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: #111827;
+  }
+  
+  /* Сетка 2 колонки */
+  .tb-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+  .tb-grid--compact{ gap: 18px; max-width: 520px; }
+  .tb-field{ display: flex; flex-direction: column; gap: 10px; }
+  .tb-field--full{ grid-column: 1 / -1; }
+  
+  .tb-label{
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-bold-blue, #2563eb);
+  }
+  
+  /* Поля */
+  .tb-input, .tb-textarea{
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    outline: none;
+    background: #ffffff;
+    color: #111827;
+    font-size: 16px;
+    transition: box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  }
+  .tb-input::placeholder, .tb-textarea::placeholder{
+    color: #c7cdda;
+  }
+  .tb-input:focus, .tb-textarea:focus{
+    border-color: #c7d2fe;
+    box-shadow: 0 0 0 4px rgba(59,130,246,.15);
+  }
+  .tb-textarea{
+    border-radius: 20px;
+    resize: vertical;
+    min-height: 160px;
+  }
+  /* ===== Participants section ===== */
+.participants{
+    position: relative;
+    margin-top: 28px;
+    background: #f6f7f9;
+    border-radius: 16px;
+  }
+  .part-title{
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--text-bold-blue, #2563eb);
+    margin: 0 0 18px;
+  }
+  
+  /* Круглый чек-контрол */
+  .circle-check{
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .circle-check__input{
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0; height: 0;
+  }
+  .circle-check__ring{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px #93c5fd; /* голубой обвод */
+    background: #fff;
+    position: relative;
+    transition: box-shadow 180ms ease, background-color 180ms ease;
+  }
+  .circle-check__dot{
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    background: #3b82f6;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 180ms ease;
+  }
+  .circle-check.is-on .circle-check__ring{
+    box-shadow: inset 0 0 0 19px rgba(147,197,253,.35);
+  }
+  .circle-check.is-on .circle-check__dot{
+    width: 16px; height: 16px;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .circle-check__text{
+    font-size: 22px;
+    color: #0f172a;
+  }
+  
+  /* Кнопка справа снизу */
+  .part-actions{
+
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+  .primary-pill{
+    min-width: 240px;
+    padding: 18px 28px;
+    border: 0;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--text-blue); /* синий текст */
+    font-weight: 800;
+    font-size: 20px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 180ms ease, background-color 160ms ease;
+  }
+  .primary-pill:hover{
+    box-shadow: 0 8px 28px rgba(0,0,0,.08);
+  }
+  .primary-pill:active{
+    transform: translateY(1px) scale(.995);
+  }
+  
+  /* Адаптив */
+  @media (max-width: 768px){
+    .circle-check__text{ font-size: 18px; }
+    .primary-pill{ min-width: 200px; font-size: 18px; padding: 16px 22px; }
+    .circle-check__ring{
+        width: 25px;
+        height: 25px;
+    }
+    .circle-check__text{
+        font-size: 16px;
+    }
+    
+  }
+  
+  @media (max-width:1025px) {
+    .create-tournament-format-wrapper{
+        gap: 20px;
+    }
+    .create-tournament-format-item{
+        width: 47%;
+    }
+  }
+  /* Адаптив */
+  @media (max-width: 992px){
+    .tb-grid{ grid-template-columns: 1fr; }
+    .tb-grid--compact{ max-width: 100%; }
+  }
+  
+  
+  /* Адаптив */
+  @media (max-width: 768px){
+    .de-toggle{
+      gap: 14px;
+    }
+    .de-toggle-label{
+      font-size: 18px;
+    }
+    .de-toggle-sub{
+      font-size: 14px;
+    }
+
+  }
+  @media (max-width:521px) {
+    .de-toggle{
+        flex-direction: column-reverse;
+        align-items: start;
+    }
+    .create-tournament-format-item{
+        width: 100%;
+    }
+  }
+  

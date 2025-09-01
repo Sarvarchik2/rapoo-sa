@@ -1,0 +1,102 @@
+/* Используются ваши токены из :root */
+.faq-page{
+    min-height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .faq-title{
+    margin: 0 0 24px;
+    text-align: center;
+    color: var(--text-blue);
+    font-weight: 800;
+    font-size: 32px;
+  }
+  
+  .faq-list{
+    width: min(1120px, 100%);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 16px;
+  }
+  
+  /* Элемент-«пилла» */
+  .faq-item{
+    background: var(--bg-blue);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  
+  /* Заголовок кнопкой */
+  .faq-head{
+    width: 100%;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border: 0;
+    background: transparent;
+    color: var(--text-white);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: left;
+  }
+  
+  .faq-q{
+    line-height: 1.35;
+  }
+  
+  /* Плюс/минус */
+  .faq-sign{
+    width: 32px; height: 32px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.28);
+    position: relative;
+    flex: 0 0 32px;
+  }
+  .faq-sign::before,
+  .faq-sign::after{
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 16px; height: 2px;
+    background: var(--text-white);
+    transform: translate(-50%,-50%);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .faq-sign::after{
+    transform: translate(-50%,-50%) rotate(90deg);
+  }
+  .faq-item.open .faq-sign::after{ opacity: 0; } /* минус */
+  
+  .faq-body{
+    color: var(--text-white);
+    padding: 0 22px 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    /* анимация раскрытия */
+    animation: slideDown .22s ease;
+  }
+  @keyframes slideDown{
+    from{ opacity: 0; transform: translateY(-4px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  
+  /* hover */
+  .faq-head:hover .faq-sign{ background: rgba(255,255,255,.36); }
+  
+  /* адаптив */
+  @media (max-width: 640px){
+    .faq-title{ font-size: 24px; }
+    .faq-head{ padding: 16px 18px; font-size: 16px; }
+    .faq-body{ padding: 0 18px 16px; }
+  }
+  

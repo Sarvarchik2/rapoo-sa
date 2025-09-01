@@ -1,0 +1,68 @@
+<svg width="186" height="163" viewBox="0 0 186 163" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" width="8" height="8" fill="#295DFF"/>
+<rect y="10" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="10" width="8" height="8" fill="#295DFF"/>
+<rect y="35" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="35" width="8" height="8" fill="#295DFF"/>
+<rect y="45" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="45" width="8" height="8" fill="#295DFF"/>
+<g clip-path="url(#clip0_1184_3127)">
+<rect x="48" y="17.5" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="78" y="17.5" width="8" height="8" fill="#295DFF"/>
+</g>
+<g clip-path="url(#clip1_1184_3127)">
+<rect x="48" y="27.5" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="78" y="27.5" width="8" height="8" fill="#295DFF"/>
+</g>
+<rect x="98" y="34" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="128" y="34" width="8" height="8" fill="#295DFF"/>
+<rect x="98" y="44" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="128" y="44" width="8" height="8" fill="#295DFF"/>
+<rect x="148" y="34" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="178" y="34" width="8" height="8" fill="#295DFF"/>
+<rect x="148" y="44" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="178" y="44" width="8" height="8" fill="#295DFF"/>
+<rect y="110" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="110" width="8" height="8" fill="#295DFF"/>
+<rect y="120" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="120" width="8" height="8" fill="#295DFF"/>
+<rect y="145" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="145" width="8" height="8" fill="#295DFF"/>
+<rect y="155" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="30" y="155" width="8" height="8" fill="#295DFF"/>
+<g clip-path="url(#clip2_1184_3127)">
+<rect x="48" y="127.5" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="78" y="127.5" width="8" height="8" fill="#295DFF"/>
+</g>
+<g clip-path="url(#clip3_1184_3127)">
+<rect x="48" y="137.5" width="38" height="8" rx="2" fill="#80C5FD"/>
+<rect x="78" y="137.5" width="8" height="8" fill="#295DFF"/>
+</g>
+<path d="M39 9H42.4077" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M42.4062 9V44" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M39 44H42.4077" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M42.5547 26.3184H46.9995" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M88 27H91.4077" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M92 43H97" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M88 137H91.4077" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M92 27V137" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M40 119H43.4077" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M43.4062 119V154" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M40 154H43.4077" stroke="#295DFF" stroke-linecap="round"/>
+<path d="M43.5547 136.318H47.9995" stroke="#295DFF" stroke-linecap="round"/>
+<defs>
+<clipPath id="clip0_1184_3127">
+<rect x="48" y="17.5" width="38" height="8" rx="2" fill="white"/>
+</clipPath>
+<clipPath id="clip1_1184_3127">
+<rect x="48" y="27.5" width="38" height="8" rx="2" fill="white"/>
+</clipPath>
+<clipPath id="clip2_1184_3127">
+<rect x="48" y="127.5" width="38" height="8" rx="2" fill="white"/>
+</clipPath>
+<clipPath id="clip3_1184_3127">
+<rect x="48" y="137.5" width="38" height="8" rx="2" fill="white"/>
+</clipPath>
+</defs>
+</svg>

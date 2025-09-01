@@ -1,5 +1,7 @@
 
-
+.login-link{
+    color: var(--text-blue);
+}
 .login-page{
     position: fixed;
     top: 0;

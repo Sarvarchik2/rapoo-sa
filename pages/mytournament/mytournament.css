@@ -1,0 +1,298 @@
+/* ==== layout ==== */
+.t-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.t-back {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    color: #2563eb;
+    text-decoration: none;
+    background: var(--bg-white);
+    width: max-content;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* tabs */
+.t-tabs {
+    position: relative;
+    display: inline-flex;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 999px;
+    background: var(--bg-white);
+    width: max-content;
+    margin: 10px 0 20px;
+}
+
+.t-tab {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--text-black);
+    opacity: .7;
+}
+
+.t-tab.active {
+    opacity: 1;
+}
+
+.t-tabs__indicator {
+    position: absolute;
+    z-index: 1;
+    height: 36px;
+    width: var(--tab-w, 80px);
+    left: var(--tab-left, 0px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-blue);
+    border-radius: 999px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
+    transition: all .2s ease;
+}
+
+/* summary strip */
+.t-summary {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 8px 0 18px;
+    justify-content: space-between;
+}
+
+.t-summary__item {
+    min-width: 160px;
+}
+
+.t-summary__label {
+    font-size: 16px;
+    opacity: .6;
+    margin-bottom: 6px;
+    color: var(--text-bold-blue);
+    font-weight: 700;
+}
+
+.t-summary__val {
+    font-weight: 400;
+    font-size: 20px;
+
+    color: #A2A2A2;
+}
+
+/* participants */
+.t-participants {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+}
+
+.t-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 16px;
+    display: grid;
+    place-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+}
+
+.t-card__logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.t-card__name {
+    font-weight: 800;
+}
+
+/* settings */
+.t-settings {
+    max-width: 720px;
+}
+
+.t-field {
+    display: grid;
+    gap: 6px;
+    margin: 10px 0 20px;
+}
+
+.t-input {
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.t-embed {
+    aspect-ratio: 16/9;
+    background: #0f172a0d;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.t-embed iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.t-embed__hint {
+    padding: 18px;
+}
+
+/* ==== BRACKETS ==== */
+.brk {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+}
+
+.brk-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.brk-match {
+    width: 210px;
+    background: transparent;
+    position: relative;
+}
+
+.brk-slot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 8px 10px;
+    position: relative;
+}
+
+.brk-slot+.brk-slot {
+    margin-top: 8px;
+}
+
+.brk-logo {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.brk-name {
+    font-weight: 700;
+}
+
+.brk-score {
+    margin-left: auto;
+    font-weight: 800;
+}
+
+/* simple connectors look */
+.brk-col:not(:last-child) .brk-match::after {
+    content: '';
+    position: absolute;
+    right: -22px;
+    top: 50%;
+    width: 22px;
+    height: 2px;
+    background: #c7d2fe;
+}
+
+.brk-col:not(:first-child) .brk-match::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 50%;
+    width: 22px;
+    height: 2px;
+    background: #c7d2fe;
+}
+
+.brk__section {
+    margin-bottom: 26px;
+}
+
+.brk__label {
+    font-size: 12px;
+    opacity: .65;
+    margin: 6px 0 10px;
+    font-weight: 800;
+}
+
+.brk__section--finals .brk-match {
+    width: 240px;
+}
+
+/* ==== ROUND ROBIN ==== */
+.rr {
+    display: inline-block;
+    padding: 6px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.rr-row {
+    display: flex;
+}
+
+.rr-row+.rr-row {
+    border-top: 1px solid #e5e7eb;
+}
+
+.rr-row--header {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.rr-c {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+}
+
+.rr-c+.rr-c {
+    border-left: 1px solid #e5e7eb;
+}
+
+.rr-c--corner {
+    background: #f8fafc;
+}
+
+.rr-c--h,
+.rr-c--v {
+    background: #f8fafc;
+}
+
+.rr-logo {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.rr-c--blank {
+    background: #fafafa;
+}
+
+.rr-c--win {
+    background: #dbeafe;
+}
+
+.rr-c--lose {
+    background: #fee2e2;
+}

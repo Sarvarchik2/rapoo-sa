@@ -117,7 +117,11 @@
     align-items: center;
     gap: 20px;
 }
-
+.info-text{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
 .info-text h3 {
     color: var(--text-white);
     font-size: 16px;
@@ -149,125 +153,6 @@
     overflow: contain;
 }
 
-/* Турнирная сетка */
-.tournament-bracket {
-    width: 100%;
-    background: #f8f9fa;
-    border-radius: 20px;
-    padding: 30px;
-    height: 750px;
-}
-
-.bracket-title {
-    color: var(--text-bold-blue);
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0 0 30px 0;
-}
-
-.bracket-container {
-    display: flex;
-    gap: 60px;
-    align-items: flex-start;
-    overflow-x: auto;
-    padding: 20px 0;
-    height: 100%;
-}
-
-.bracket-round {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    min-width: 160px;
-    height: 100%;
-    justify-content: center;
-}
-
-.bracket-match {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: relative;
-}
-
-.team-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--bg-white);
-    border: 1px solid var(--text-blue);
-    border-radius: 8px;
-    padding: 12px 15px;
-    min-width: 140px;
-    transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-.main-title-wrap{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 45px;
-    margin: 50px 0;
-  }
-  .main-title-wrap h2{
-    color: var(--text-bold-blue);
-    font-size: 32px;
-    font-weight: 700;
-  }
-.team-box:hover {
-    border-color: var(--text-blue-btn);
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
-}
-
-.team-box img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-}
-
-.team-box span {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-black);
-}
-
-
-.bracket-winner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-/* Простые соединительные линии */
-.bracket-match::after {
-    content: '';
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    width: 30px;
-    height: 2px;
-    background: #80c5fd;
-    transform: translateY(-50%);
-}
-
-.bracket-match:last-child::after {
-    display: none;
-}
-
-/* Вертикальные линии для соединения */
-.bracket-round:not(:last-child)::before {
-    content: '';
-    position: absolute;
-    right: -15px;
-    top: 50%;
-    width: 2px;
-    height: 40px;
-    background: #80c5fd;
-    transform: translateY(-50%);
-}
 
 /* Расписание матчей */
 .matches-schedule {
@@ -335,7 +220,7 @@
     flex-direction: column;
     gap: 15px;
 }
-
+/* // sarik */
 .match-item {
     display: flex;
     align-items: center;

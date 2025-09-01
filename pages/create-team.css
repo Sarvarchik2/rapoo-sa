@@ -35,6 +35,7 @@
   right: 20px;
   width: 25px;
   height: 25px;
+  cursor: pointer;
 }
 
 .create-team-popup-wrapper h2 {
@@ -268,6 +269,9 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   position: relative;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .player-card:hover {
@@ -277,6 +281,7 @@
 
 .player-avatar {
   width: 150px;
+  height: 150px;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto;
@@ -364,7 +369,7 @@
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  padding: 8px 0;
+  /* padding: 8px 0; */
   min-width: 120px;
   z-index: 20;
   animation: dropdownFadeIn 0.2s ease;
@@ -387,9 +392,15 @@
   font-size: 14px;
   cursor: pointer;
   transition: background 0.2s ease;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+
+  width: 100%;
+  height: 100%;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover  {
   background: #f5f5f5;
 }
 
@@ -481,6 +492,9 @@
 .team-name-section {
   margin-bottom: 40px;
   width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .team-name-input {
@@ -519,7 +533,7 @@
 
 .logo-upload-box {
   width: 100%;
-  height: 51px;
+  height: 200px;
   border: 2px dashed #e0e0e0;
   border-radius: 12px;
   background: #ffffff;
@@ -528,7 +542,9 @@
   justify-content: center;
   transition: all 0.3s ease;
 }
-
+.logo-upload-box img{
+  width: 80%;
+}
 .logo-upload-box:hover {
   border-color: #4285F4;
   background: #f0f8ff;
@@ -662,31 +678,34 @@ display: flex;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 20px;
 }
 .result-card-center{
 flex: 1;
 }
 .result-avatar {
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height:100px;
   border-radius: 50%;
   object-fit: cover;
 }
-
+.result-card-center{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .result-name {
-  font-size: 18px;
+  font-size: 26px;
   font-weight: 700;
-  color: #1A1A1A;
-  margin-bottom: 6px;
+  color: #000;
+}
+.result-card-center span{
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-blue);
 }
 
-.result-meta {
-  font-size: 14px;
-  color: #5f6b7b;
-  margin-bottom: 6px;
-}
 
 .result-game {
   display: inline-block;
@@ -701,7 +720,7 @@ flex: 1;
 }
 
 .result-team {
-  font-size: 14px;
+  font-size: 18px;
   color: #8a94a6;
 }
 
@@ -710,6 +729,7 @@ flex: 1;
   align-items: center;
   gap: 6px;
   font-weight: 700;
+  font-size: 20px;
   color: #1a1a1a;
 }
 
@@ -799,6 +819,16 @@ flex: 1;
   }
   .team-logo-section{
     width: 100%;
+  }
+  .result-name{
+    font-size: 20px;
+  }
+  .result-card-center span{
+    font-size: 18px;
+  }
+  .result-avatar{
+    width: 75px;
+    height: 75px;
   }
 }
 @media (max-width: 480px) {
