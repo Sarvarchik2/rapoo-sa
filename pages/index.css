@@ -623,6 +623,12 @@
   border-radius: 20px;
   overflow: hidden;
   transition: transform 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+.main-live-item:hover{
+  transition: all 0.3s ease;
+  scale: 1.01;
 }
 
 

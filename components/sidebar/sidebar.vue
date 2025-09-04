@@ -23,7 +23,7 @@
                     </li>
                 </NuxtLink>
 
-                <NuxtLink to="/tournaments" class="sidebar-content-item" active-class="active">
+                <NuxtLink :to="'/tournaments'" class="sidebar-content-item" :class="{ active: isActive(['/tournaments', '/tournaments-more']) }">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path opacity="0.5"
@@ -51,7 +51,7 @@
                         Турниры
                     </li>
                 </NuxtLink>
-                <NuxtLink to="/news" class="sidebar-content-item" active-class="active">
+                <NuxtLink :to="'/news'" class="sidebar-content-item" :class="{ active: isActive(['/news', '/news-more']) }">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path opacity="0.5"
@@ -70,7 +70,7 @@
                         Новости
                     </li>
                 </NuxtLink>
-                <NuxtLink to="/streams" class="sidebar-content-item" active-class="active">
+                <NuxtLink :to="'/streams'" class="sidebar-content-item" :class="{ active: isActive(['/streams', '/streams-more']) }">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path opacity="0.5"
@@ -83,7 +83,7 @@
                         Трансляции
                     </li>
                 </NuxtLink>
-                <NuxtLink to="/rate" class="sidebar-content-item" active-class="active">
+                <NuxtLink :to="'/rate'" class="sidebar-content-item" :class="{ active: isActive(['/rate', '/rate-player', '/rate-team']) }">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path opacity="0.5"
@@ -96,7 +96,7 @@
                         Рейтинг
                     </li>
                 </NuxtLink>
-                <NuxtLink to="/registry" class="sidebar-content-item" active-class="active">
+                <NuxtLink :to="'/registry'" class="sidebar-content-item" :class="{ active: isActive(['/registry']) }">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path
@@ -112,7 +112,7 @@
                         Реестр
                     </li>
                 </NuxtLink>
-                <NuxtLink to="/settings" class="sidebar-content-item" active-class="active">
+                <NuxtLink :to="'/settings'" class="sidebar-content-item" :class="{ active: isActive(['/settings']) }">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd"
@@ -176,6 +176,7 @@
 </template>
 
 <script setup>
+const route = useRoute()
 const { user } = useAuth()
 const isOrganizer = computed(() => {
     const u = user.value || {}
@@ -183,6 +184,15 @@ const isOrganizer = computed(() => {
     const flags = [u?.data?.is_organizer, u?.is_organizer, u?.profile?.is_organizer].some(Boolean)
     return role.includes('ADMIN') || role.includes('STAFF') || role.includes('ORGANIZER') || flags
 })
+
+function isActive(prefixes) {
+    try {
+        const path = route.path || ''
+        return prefixes.some(p => path === p || path.startsWith(p + '/'))
+    } catch {
+        return false
+    }
+}
 </script>
 
 <style scoped>

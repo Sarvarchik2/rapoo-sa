@@ -46,8 +46,10 @@
             @error="onAvatarError"
           />
           <div v-else class="avatar-fallback">
-            <span v-if="initials">{{ initials }}</span>
-            <img v-else :src="userIcon" alt="User" />
+            <!-- <span v-show="!!initials">{{ initials }}</span> -->
+            <img v-show="!!initials" :src="AvatarUserDefault" alt="User" />
+
+            <img v-show="!initials" :src="userIcon" alt="User" />
           </div>
         </NuxtLink>
       </div>
@@ -55,6 +57,8 @@
   </template>
   
   <script setup lang="ts">
+import AvatarUserDefault from '@/assets/user.png'
+
   import { computed, ref, watch } from 'vue'
   import userIcon from '@/assets/icons/navbar/user.svg'
   

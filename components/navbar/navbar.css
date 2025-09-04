@@ -76,11 +76,19 @@ text-decoration: none;
     overflow: hidden;
     position: relative;
 }
+
+
 .navbar-shop-cart img{
     position: absolute;
     left: 0;
     top: 50%;
+    transition: all 0.3s ease;
     transform: translateY(-50%);
+}
+
+.navbar-shop-cart:hover.navbar-shop-cart img{
+    scale: 1.05;
+    
 }
 .navbar-right{
     display: flex;

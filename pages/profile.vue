@@ -7,7 +7,7 @@
       <!-- ===== Верхняя карточка пользователя ===== -->
       <div class="profile-user-card">
         <div class="profile-user-avatar">
-          <img :src="avatar || '/assets/icons/navbar/user.svg'" alt="User Avatar" />
+          <img :src="avatar || AvatarUserDefault" alt="User Avatar" />
         </div>
         <div class="profile-user-info">
           <h2 class="profile-user-name">{{ displayName }}</h2>
@@ -28,7 +28,7 @@
       <!-- ===== Только для ORGANIZER: Мои турниры ===== -->
       <div v-if="isOrganizer" class="profile-sections profile-sections-organizer">
         <div class="profile-section profile-sections-organizer-wrapper">
-          <div class="profile-section-title" style="display:flex;align-items:center;justify-content:space-between;">
+          <div class="profile-section-title profile-section-title-organizer" style="display:flex;align-items:center;justify-content:space-between;">
             <h3 class="profile-section-title">Мои турниры</h3>
             <NuxtLink to="/create-tournament" class="profile-team-create profile-team-create2">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -47,8 +47,8 @@
               </div>
               <div class="profile-achievement-logo">
                 <img 
-                  v-if="getTournamentLogo(t.logo)" 
-                  :src="getTournamentLogo(t.logo) || ''" 
+                  v-if="getTournamentLogo(t.logo, t.banner)" 
+                  :src="getTournamentLogo(t.logo, t.banner) || ''" 
                   :alt="t.name || 'tournament'" 
                   class="profile-achievement-logo-img"
                 />
@@ -252,6 +252,7 @@
 
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' })
+import AvatarUserDefault from '@/assets/user.png'
 
 
 import { ref, computed, watch } from 'vue'
@@ -480,14 +481,20 @@ function formatNumber(n: number) {
 }
 
 /** ===== турнирные утилиты ===== */
-function getTournamentLogo(logoId: any) {
-  if (!logoId) return null
-  // Если это уже URL
-  if (typeof logoId === 'string' && logoId.startsWith('http')) return logoId
-  // Если это ID, формируем URL (предполагаем, что медиа файлы доступны по /media/)
-  if (typeof logoId === 'number' || (typeof logoId === 'string' && /^\d+$/.test(logoId))) {
-    return `/media/tournament-logos/${logoId}/`
+function getTournamentLogo(logoLike: any, fallbackBanner?: any) {
+  // Поддержка разных форматов из API
+  // 1) Объект { file: 'https://...' }
+  if (logoLike && typeof logoLike === 'object') {
+    if (typeof logoLike.file === 'string' && logoLike.file.startsWith('http')) return logoLike.file
+    if (typeof logoLike.url === 'string' && logoLike.url.startsWith('http')) return logoLike.url
   }
+  // 2) Прямая строка-URL
+  if (typeof logoLike === 'string' && /^https?:\/\//i.test(logoLike)) return logoLike
+  // 3) Fallback: баннер, если передан
+  if (fallbackBanner && typeof fallbackBanner === 'object' && typeof fallbackBanner.file === 'string') {
+    return fallbackBanner.file
+  }
+  // 4) Числовые идентификаторы больше не используем без явного эндпоинта хранения
   return null
 }
 
@@ -565,6 +572,7 @@ function getStatusClass(status: string | null) {
 @import './profile.css';
 @import './tournament.css';
 @import './create-team.css';
+@import './rate-player.css';
 
 .state {
   text-align: center;
@@ -628,5 +636,11 @@ function getStatusClass(status: string | null) {
   background: #f1f5f9;
   color: #64748b;
 }
-
+@media (max-width: 520px) {
+  .profile-section-title-organizer{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
 </style>

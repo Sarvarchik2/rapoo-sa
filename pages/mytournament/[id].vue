@@ -219,7 +219,7 @@ function normalizeRounds(r:any): RoundItem[] {
     }))
   }
   if (r && typeof r === 'object') {
-    const order = ['WB Semi Final','WB Final','Semi Final','Final','Grand Final'] as const
+    const order: string[] = ['WB Semi Final','WB Final','Semi Final','Final','Grand Final']
     const entries = Object.entries(r as Record<string, unknown>)
       .map(([k, v]) => [k, Array.isArray(v) ? (v as any[]) : []] as [string, any[]])
       .sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0]))
@@ -257,10 +257,24 @@ const finalUI = computed<MatchUI>(() => {
   return mapMatch(m)
 })
 const winnerUI = computed<TeamUI>(() => {
+  // 1) Пытаемся взять победителя из API: bracketRaw.data.tournament.winner
+  const w =
+    (bracketRaw.value?.data?.tournament?.winner) ||
+    (bracketRaw.value?.tournament?.winner) ||
+    (t.value?.tournament?.winner) ||
+    (t.value?.winner)
+
+  if (w && typeof w === 'object') {
+    const name = w.name || w.team_name || null
+    const logo = (w.logo && (w.logo.file || w.logo.path || w.logo)) || w.avatar || null
+    if (name || logo) return { name, logo }
+  }
+
+  // 2) Fallback: вычисляем на основе финального матча
   const r1 = bracketRounds.value[1]; const m = Array.isArray(r1?.matches) ? r1.matches[0] : null
   if (m?.winner?.id && (m?.team1?.id || m?.team2?.id)) {
-    const w = (m.winner.id === m.team1?.id) ? m.team1 : (m.winner.id === m.team2?.id ? m.team2 : null)
-    return mapTeam(w || null)
+    const w2 = (m.winner.id === m.team1?.id) ? m.team1 : (m.winner.id === m.team2?.id ? m.team2 : null)
+    return mapTeam(w2 || null)
   }
   return {}
 })
@@ -328,7 +342,16 @@ async function onStart(){
     startOk.value=true
     await Promise.all([fetchTournament(), fetchParticipants(), fetchBracket()])
   }catch(e:any){
-    startErr.value = e?.data?.detail || e?.message || 'Не удалось запустить турнир'
+    // Сервер может вернуть ошибку, но турнир фактически уже запущен.
+    // Перезагружаем данные и проверяем статус/брекет.
+    await Promise.allSettled([fetchTournament(), fetchParticipants(), fetchBracket()])
+    const startedNow = isStarted.value || !!(bracket.value && (Array.isArray(bracket.value?.rounds) ? bracket.value.rounds.length : 0))
+    if (startedNow) {
+      startOk.value = true
+      startErr.value = null
+    } else {
+      startErr.value = e?.data?.detail || e?.message || 'Не удалось запустить турнир'
+    }
   }finally{ starting.value=false }
 }
 

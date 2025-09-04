@@ -10,13 +10,14 @@
         </NuxtLink>
 
         <div class="main-content">
+           
             <div class="video-player">
                 <div class="video-container">
                     <iframe 
                         width="100%" 
                         height="100%" 
-                        src="https://www.youtube.com/embed/FMPYMwe6wD4?si=chA7tyKgEvpGwUfX&autoplay=1" 
-                        title="YouTube video player" 
+                        :src="embedSrc" 
+                        title="Stream player" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         referrerpolicy="strict-origin-when-cross-origin" 
@@ -24,7 +25,9 @@
                     ></iframe>
                 </div>
             </div>
-
+            <!-- <div class="main-title-wrap"> -->
+                <h2 class="streams-more-title">{{ stream?.title || 'Стрим' }}</h2>
+            <!-- </div> -->
             <div class="stream-description">
                 <p class="stream-text">
                     Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
@@ -150,7 +153,83 @@
 </template>
 
 <script setup>
-// Component logic can be added here
+import { ref, onMounted } from 'vue'
+import { useRoute, useRuntimeConfig } from '#imports'
+
+const route = useRoute()
+const config = useRuntimeConfig()
+const API_BASE = (config.public?.apiBase || '').toString()
+
+const stream = ref(null)
+const embedSrc = ref('')
+const pending = ref(true)
+const error = ref(null)
+
+function extractYoutubeId(url) {
+  try {
+    const u = new URL(String(url))
+    if (u.hostname.includes('youtu.be')) {
+      return u.pathname.split('/')[1] || null
+    }
+    if (u.hostname.includes('youtube.com')) {
+      if (u.pathname.includes('/embed/')) return u.pathname.split('/embed/')[1] || null
+      const v = u.searchParams.get('v')
+      return v || null
+    }
+  } catch {}
+  return null
+}
+
+function extractTwitchChannel(url) {
+  try {
+    const u = new URL(String(url))
+    if (u.hostname.includes('twitch.tv')) {
+      if (u.searchParams.get('channel')) return u.searchParams.get('channel')
+      const parts = u.pathname.split('/').filter(Boolean)
+      return parts[0] || null
+    }
+    if (u.hostname.includes('player.twitch.tv')) {
+      const ch = u.searchParams.get('channel')
+      return ch || null
+    }
+  } catch {}
+  return null
+}
+
+function buildEmbedUrl(rawUrl) {
+  const url = String(rawUrl || '')
+  const yid = extractYoutubeId(url)
+  if (yid) return `https://www.youtube.com/embed/${yid}?autoplay=1`
+  const tch = extractTwitchChannel(url)
+  if (tch) {
+    const parent = typeof window !== 'undefined' ? window.location.hostname : 'localhost'
+    return `https://player.twitch.tv/?channel=${encodeURIComponent(tch)}&parent=${encodeURIComponent(parent)}&autoplay=true`
+  }
+  // fallback to provided embed url directly
+  return url
+}
+
+async function fetchStream() {
+  pending.value = true; error.value = null
+  try {
+    const idParam = route.params.id
+    const id = Number(idParam)
+    const url = `${API_BASE}/streaming/main/`
+    const res = await $fetch(url)
+    const categories = Array.isArray(res?.results) ? res.results : []
+    const allStreams = categories.flatMap(c => Array.isArray(c?.category_streams) ? c.category_streams : [])
+    const found = allStreams.find(s => Number(s?.id) === id) || null
+    stream.value = found
+    const playable = found?.hls_url || found?.rtmp_url || found?.embed_url || found?.url || ''
+    embedSrc.value = buildEmbedUrl(playable)
+  } catch (e) {
+    error.value = e
+  } finally {
+    pending.value = false
+  }
+}
+
+onMounted(() => { fetchStream() })
 </script>
 
 <style>

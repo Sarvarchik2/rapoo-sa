@@ -1,5 +1,6 @@
 <template>
   <div class="cyber-olam-main">
+    <!-- ===== Верхняя зона (без изменений) ===== -->
     <section class="cyber-olam-main-top">
       <div class="cyber-olam-main-top-left">
         <Swiper />

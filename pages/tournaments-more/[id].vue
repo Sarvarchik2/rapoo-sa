@@ -218,12 +218,26 @@ const finalUI = computed<MatchUI>(() => {
 })
 
 const winnerUI = computed<TeamUI>(() => {
+  // 1) Победитель из API, если доступен
+  const w =
+    (bracketRaw.value?.data?.tournament?.winner) ||
+    (bracketRaw.value?.tournament?.winner) ||
+    (t.value as any)?.tournament?.winner ||
+    (t.value as any)?.winner
+
+  if (w && typeof w === 'object') {
+    const name = w.name || w.team_name || null
+    const rawLogo = (w.logo && (w.logo.file || w.logo.path || w.logo)) || w.avatar || null
+    const logo = rawLogo ? fileToUrl(rawLogo) : null
+    if (name || logo) return { name, logo }
+  }
+
+  // 2) Fallback: на основе финального матча
   const fr = rounds.value?.[1]
   const m: any = Array.isArray(fr?.matches) && fr!.matches.length ? fr!.matches[0] : null
-  const w = (m && m.winner) ? String(m.winner).toUpperCase() : ''
-  if (w === 'TEAM1' || w === '1') return toTeamUI(m.team1)
-  if (w === 'TEAM2' || w === '2') return toTeamUI(m.team2)
-  // Fallback: if one team exists, prefer the one marked winner-like
+  const wv = (m && m.winner) ? String(m.winner).toUpperCase() : ''
+  if (wv === 'TEAM1' || wv === '1') return toTeamUI(m?.team1)
+  if (wv === 'TEAM2' || wv === '2') return toTeamUI(m?.team2)
   return { name: null, logo: null }
 })
 

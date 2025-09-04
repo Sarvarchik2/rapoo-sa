@@ -35,7 +35,7 @@
       <NuxtLink
         v-for="s in activeStreams"
         :key="s.id"
-        to="/streams-more"
+        :to="`/streams-more/${s.id}`"
         class="main-live-item"
       >
         <div class="main-live-item-top">
@@ -54,7 +54,7 @@
             <h3>{{ s.title || 'Без названия' }}</h3>
             <h4>{{ s.game?.title || '—' }}</h4>
             <span>
-              {{ s.language?.name || '—' }}
+              {{ s.language?.name || 'EN' }}
             </span>
           </div>
           <!-- <button class="main-live-item-bottom-option" type="button">

@@ -73,11 +73,11 @@
             </div>
             <div class="summary-stats">
                 <div class="stat-box">
-                    <span class="stat-number">9</span>
+                    <span class="stat-number-rate">9</span>
                     <span class="stat-label">турниров</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number">2</span>
+                    <span class="stat-number-rate">2</span>
                     <span class="stat-label">выйгрыша</span>
                 </div>
             </div>

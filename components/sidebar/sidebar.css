@@ -60,8 +60,12 @@
     width: 100%;
     color: var(--text-grey);
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     text-decoration: none;
+}
+.sidebar-content-footer-item:hover{
+    color: var(--text-blue);
+    scale: 1.05;
 }
 .sidebar-content-header{
     display: flex;
