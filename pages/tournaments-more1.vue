@@ -215,5 +215,5 @@ const activeMatchTab = ref('past')
 </template>
 
 <style scoped>
-@import './tournaments-more1.css';
+@import './tournaments-more.css';
 </style>

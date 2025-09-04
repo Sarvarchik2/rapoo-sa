@@ -178,7 +178,7 @@
 .switcher-container {
     position: relative;
     display: flex;
-    background: #F9F9F9;
+    background: #fff;
     border-radius: 30px;
     gap: 8px;
     padding: 4px;

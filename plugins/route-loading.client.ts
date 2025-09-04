@@ -30,16 +30,10 @@ export default defineNuxtPlugin((nuxtApp) => {
       }, left)
     }
   
-    const router = useRouter()
-    router.beforeEach((to, from, next) => {
-      if (to.fullPath !== from.fullPath) start()
-      next()
-    })
-    router.afterEach(() => finish())
-    router.onError(() => finish())
-  
-    // Доп. хук Nuxt для надёжности
+    // Используем только Nuxt-хуки, чтобы не конфликтовать с middleware/redirect'ами
     nuxtApp.hook('page:start', start)
     nuxtApp.hook('page:finish', finish)
+    nuxtApp.hook('vue:error', finish)
+    nuxtApp.hook('app:error', finish)
   })
   

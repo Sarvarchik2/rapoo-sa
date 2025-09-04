@@ -33,6 +33,7 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen />
         </div>
+
       </div>
     </section>
 
@@ -64,7 +65,39 @@
             </div>
           </div>
         </div>
-        <button>ПОДРОБНЕЕ</button>
+        <button>
+          <svg xmlns="http://www.w3.org/2000/svg" width="66" height="38" viewBox="0 0 66 38" fill="none">
+            <g clip-path="url(#clip0_247_1034)">
+              <path opacity="0.5"
+                d="M-0.5625 -0.249902C-0.5625 -1.11301 0.170355 -1.88484 1.27421 -2.18429C2.37807 -2.48374 3.61945 -2.24748 4.38541 -1.59216L26.8854 17.6578C27.7882 18.4302 27.7882 19.57 26.8854 20.3424L4.38541 39.5924C3.61945 40.2477 2.37807 40.4839 1.27421 40.1845C0.170355 39.885 -0.5625 39.1132 -0.5625 38.2501L-0.5625 -0.249902Z"
+                fill="#008DFF" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M15.4196 -1.81593C14.2403 -1.07462 14.1037 0.227435 15.1146 1.09229L36.0457 19L15.1146 36.9078C14.1037 37.7726 14.2403 39.0747 15.4196 39.816C16.599 40.5573 18.3745 40.4572 19.3854 39.5923L41.8854 20.3423C42.7882 19.5699 42.7882 18.4302 41.8854 17.6578L19.3854 -1.59222C18.3745 -2.45708 16.599 -2.55724 15.4196 -1.81593Z"
+                fill="#008DFF" />
+            </g>
+            <defs>
+              <clipPath id="clip0_247_1034">
+                <rect width="66" height="90" fill="white" transform="matrix(0 1 -1 0 66 -14)" />
+              </clipPath>
+            </defs>
+          </svg>
+          ПОДРОБНЕЕ
+          <svg xmlns="http://www.w3.org/2000/svg" width="66" height="38" viewBox="0 0 66 38" fill="none">
+            <g clip-path="url(#clip0_247_1035)">
+              <path opacity="0.5"
+                d="M66.5625 -0.249902C66.5625 -1.11301 65.8296 -1.88484 64.7258 -2.18429C63.6219 -2.48374 62.3805 -2.24748 61.6146 -1.59216L39.1146 17.6578C38.2118 18.4302 38.2118 19.57 39.1146 20.3424L61.6146 39.5924C62.3805 40.2477 63.6219 40.4839 64.7258 40.1845C65.8296 39.885 66.5625 39.1132 66.5625 38.2501V-0.249902Z"
+                fill="#008DFF" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M50.5804 -1.81593C51.7597 -1.07462 51.8963 0.227435 50.8854 1.09229L29.9543 19L50.8854 36.9078C51.8963 37.7726 51.7597 39.0747 50.5804 39.816C49.401 40.5573 47.6255 40.4572 46.6146 39.5923L24.1146 20.3423C23.2118 19.5699 23.2118 18.4302 24.1146 17.6578L46.6146 -1.59222C47.6255 -2.45708 49.401 -2.55724 50.5804 -1.81593Z"
+                fill="#008DFF" />
+            </g>
+            <defs>
+              <clipPath id="clip0_247_1035">
+                <rect width="66" height="90" fill="white" transform="matrix(0 1 1 0 0 -14)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </button>
       </div>
 
       <div class="cyber-olam-main-top-right cyber-olam-main-top-right-next">

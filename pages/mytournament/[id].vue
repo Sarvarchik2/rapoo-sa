@@ -20,9 +20,9 @@
       <div class="t-summary__item"><div class="t-summary__label">Формат</div><div class="t-summary__val">{{ formatLabel }}</div></div>
       <div class="t-summary__item"><div class="t-summary__label">Игра</div><div class="t-summary__val">{{ gameTitle }}</div></div>
       <div class="t-summary__item"><div class="t-summary__label">Время</div><div class="t-summary__val">{{ startDate }}&nbsp;&nbsp;{{ startTime }}</div></div>
-      <div class="t-summary__item"><div class="t-summary__label">Место</div><div class="t-summary__val">{{ locationText }}</div></div>
+      <!-- <div class="t-summary__item"><div class="t-summary__label">Место</div><div class="t-summary__val">{{ locationText }}</div></div> -->
       <div class="t-summary__item"><div class="t-summary__label">Призовой фонд</div><div class="t-summary__val">{{ prizeText }}</div></div>
-      <div class="t-summary__item"><div class="t-summary__label">Организатор</div><div class="t-summary__val">{{ organizer }}</div></div>
+      <!-- <div class="t-summary__item"><div class="t-summary__label">Организатор</div><div class="t-summary__val">{{ organizer }}</div></div> -->
 
       <div class="t-summary__start" v-if="showStartButton">
         <button class="t-start-btn" :disabled="starting || !canStart" @click="onStart" :title="!canStart ? startHint : 'Сгенерировать сетку и запустить турнир'">
@@ -77,7 +77,6 @@ import { useAuth } from '~/composables/useAuth'
 
 definePageMeta({ middleware: 'organizer-only' })
 
-/* ==== base & auth ==== */
 const { $api } = useNuxtApp()
 const config = useRuntimeConfig()
 const { user, access } = useAuth()
@@ -93,20 +92,17 @@ async function tryApi<T>(urls:string[], opts:any = {}): Promise<T> {
   throw last
 }
 
-/* ==== route/id ==== */
 const route = useRoute()
 const id = computed<number | null>(() => {
   const raw = route.params.id || route.query.id
   return raw ? Number(raw) : null
 })
 
-/* ==== state ==== */
 const t = ref<any>(null)
 const defaultLogo = '/assets/logo.svg'
 const loading = ref(true)
 const errorMsg = ref('')
 
-/* ==== organizer guard (дублируем на клиенте) ==== */
 const isOrganizer = computed(() => {
   const u: any = user.value || {}
   const role  = String(u?.user_role || u?.role || '').toUpperCase()

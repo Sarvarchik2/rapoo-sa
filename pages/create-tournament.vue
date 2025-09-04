@@ -55,22 +55,11 @@
       </div>
     </div>
 
-    <!-- Double Elim настройка (необязательная настройка UI) -->
-    <!-- <section class="de-settings">
-      <h2 class="de-title">Настройки Double Elimination</h2>
-      <label class="de-toggle" :class="{ 'is-on': splitEnabled }" role="switch" :aria-checked="splitEnabled ? 'true' : 'false'">
-        <input class="de-toggle-input" type="checkbox" v-model="splitEnabled" />
-        <span class="de-toggle-track"><span class="de-toggle-thumb"></span></span>
-        <span class="de-toggle-texts">
-          <span class="de-toggle-label">Включить разделение участников</span>
-          <span class="de-toggle-sub">Начните с половины участников, попавших в сетку проигравших</span>
-        </span>
-      </label>
-    </section> -->
+
 
     <!-- Основные данные -->
     <section class="tournament-basic">
-      <h3 class="tb-title">Количество участников</h3>
+      <h3 class="tb-title">Количество команд</h3>
       <div class="tb-counter" :class="{ 'at-min': participants <= minPlayers, 'at-max': participants >= maxPlayers }">
         <button type="button" class="tb-btn minus" @click="decPlayers" :disabled="participants <= minPlayers" aria-label="Уменьшить">−</button>
         <div class="tb-value" aria-live="polite">{{ participants }}</div>
@@ -84,8 +73,12 @@
         </div>
 
         <div class="tb-field">
-          <label class="tb-label">Ссылка на турнир</label>
-          <input v-model.trim="form.link" type="url" class="tb-input" placeholder="Введите здесь" />
+          <label class="tb-label">Ссылка на трансляцию</label>
+          <input v-model.trim="form.link" type="text" class="tb-input" placeholder="Вставьте iframe код или ссылку YouTube/Twitch" @input="extractStreamUrl" />
+          <div v-if="extractedUrl" class="url-preview">
+            <span class="url-label">Извлечённая ссылка:</span>
+            <span class="url-value">{{ extractedUrl }}</span>
+          </div>
         </div>
 
         <div class="tb-field tb-field--full">
@@ -95,12 +88,22 @@
 
         <!-- Опционально: логотип и баннер -->
         <div class="tb-field">
-          <label class="tb-label">Логотип (необязательно)</label>
-          <input type="file" accept="image/*" @change="onLogoChoose" />
+          <label class="tb-label">Логотип</label>
+          <label class="file-uploader">
+            <input type="file" accept="image/*" @change="onLogoChoose" />
+            <span class="file-btn">Выбрать файл</span>
+            <span class="file-name">{{ logoName || 'Файл не выбран' }}</span>
+          </label>
+          <div v-if="logoPreview" class="file-preview thumb"><img :src="logoPreview" alt="logo preview" /></div>
         </div>
         <div class="tb-field">
-          <label class="tb-label">Баннер (необязательно)</label>
-          <input type="file" accept="image/*" @change="onBannerChoose" />
+          <label class="tb-label">Баннер</label>
+          <label class="file-uploader">
+            <input type="file" accept="image/*" @change="onBannerChoose" />
+            <span class="file-btn">Выбрать файл</span>
+            <span class="file-name">{{ bannerName || 'Файл не выбран' }}</span>
+          </label>
+          <div v-if="bannerPreview" class="file-preview banner"><img :src="bannerPreview" alt="banner preview" /></div>
         </div>
       </div>
 
@@ -117,13 +120,7 @@
 
     <!-- Участники -->
     <section class="participants">
-      <!-- <h2 class="part-title">Участники</h2>
-
-      <label class="circle-check" :class="{ 'is-on': teamsRequired }">
-        <input type="checkbox" v-model="teamsRequired" class="circle-check__input" />
-        <span class="circle-check__ring"><span class="circle-check__dot"></span></span>
-        <span class="circle-check__text">Требуется регистрация участников в виде команд</span>
-      </label> -->
+  
 
       <div class="part-actions">
         <button type="button" class="primary-pill" :disabled="creating" @click="createTournament">
@@ -178,6 +175,10 @@ async function loadGames(){
     games.value = list.map(g => ({ id: g.id, title: g.title }))
     categories2.value = games.value.map(g => g.title)
     await nextTick(); await calculateButtonWidths(buttonRefs2, buttonWidths2)
+    if (document && document.fonts && document.fonts.ready) {
+      try { await document.fonts.ready; await calculateButtonWidths(buttonRefs2, buttonWidths2) } catch {}
+    }
+    await new Promise(r => requestAnimationFrame(() => { calculateButtonWidths(buttonRefs2, buttonWidths2).then(r) }))
   }catch{
     // fallback — если нет API, показываем заглушки, но создавать турнир без id игры не дадим
     games.value = []
@@ -213,8 +214,9 @@ function onResize(){
 onMounted(async () => {
   await loadGames()
   window.addEventListener('resize', onResize)
+  window.addEventListener('load', onResize)
 })
-onBeforeUnmount(() => { window.removeEventListener('resize', onResize); if (resizeTimer) clearTimeout(resizeTimer) })
+onBeforeUnmount(() => { window.removeEventListener('resize', onResize); window.removeEventListener('load', onResize); if (resizeTimer) clearTimeout(resizeTimer); revoke(logoPreview.value); revoke(bannerPreview.value) })
 watch([categories2, buttonRefs2], () => {
   if (activeCategory2.value >= categories2.value.length){
     activeCategory2.value = Math.max(0, categories2.value.length - 1)
@@ -223,11 +225,15 @@ watch([categories2, buttonRefs2], () => {
 })
 
 /* ---- счетчики/формы ---- */
-const minPlayers = 2
-const maxPlayers = 512
-const participants = ref(2)
-function incPlayers(){ if (participants.value < maxPlayers) participants.value++ }
-function decPlayers(){ if (participants.value > minPlayers) participants.value-- }
+const allowedParticipants = [4, 8, 16, 32]
+const minPlayers = allowedParticipants[0]
+const maxPlayers = allowedParticipants[allowedParticipants.length - 1]
+const participants = ref(minPlayers)
+const pIndex = computed(() => Math.max(0, allowedParticipants.indexOf(participants.value)))
+const canDec = computed(() => pIndex.value > 0)
+const canInc = computed(() => pIndex.value < allowedParticipants.length - 1)
+function incPlayers(){ if (canInc.value) participants.value = allowedParticipants[pIndex.value + 1] }
+function decPlayers(){ if (canDec.value) participants.value = allowedParticipants[pIndex.value - 1] }
 
 const splitEnabled = ref(true)     // опция UI (на бэк сейчас не шлём, при необходимости добавишь)
 const teamsRequired = ref(false)   // влияет на auto_approve_registrations? сейчас просто поле UI
@@ -240,11 +246,63 @@ const form = ref({
   time: ''
 })
 
+const extractedUrl = ref('')
+
+// Извлечение чистой ссылки из iframe или прямой ссылки
+function extractStreamUrl() {
+  const input = form.value.link
+  if (!input) {
+    extractedUrl.value = ''
+    return
+  }
+
+  // YouTube iframe: <iframe src="https://www.youtube.com/embed/VIDEO_ID">
+  const youtubeIframeMatch = input.match(/src="https?:\/\/(?:www\.)?youtube\.com\/embed\/([^"]+)"/)
+  if (youtubeIframeMatch) {
+    extractedUrl.value = `https://www.youtube.com/watch?v=${youtubeIframeMatch[1]}`
+    return
+  }
+
+  // Twitch iframe: <iframe src="https://player.twitch.tv/?channel=CHANNEL">
+  const twitchIframeMatch = input.match(/src="https?:\/\/player\.twitch\.tv\/\?channel=([^"&]+)/)
+  if (twitchIframeMatch) {
+    extractedUrl.value = `https://www.twitch.tv/${twitchIframeMatch[1]}`
+    return
+  }
+
+  // Twitch iframe с video: <iframe src="https://player.twitch.tv/?video=VIDEO_ID">
+  const twitchVideoMatch = input.match(/src="https?:\/\/player\.twitch\.tv\/\?video=([^"&]+)/)
+  if (twitchVideoMatch) {
+    extractedUrl.value = `https://www.twitch.tv/videos/${twitchVideoMatch[1]}`
+    return
+  }
+
+  // Прямые ссылки YouTube
+  if (input.includes('youtube.com/watch') || input.includes('youtu.be/')) {
+    extractedUrl.value = input
+    return
+  }
+
+  // Прямые ссылки Twitch
+  if (input.includes('twitch.tv/')) {
+    extractedUrl.value = input
+    return
+  }
+
+  // Если не удалось извлечь - показываем как есть
+  extractedUrl.value = input
+}
+
 /* ---- медиа ---- */
 const logoFile = ref(null)
 const bannerFile = ref(null)
-function onLogoChoose(e){ const f = e.target.files?.[0]; if (f) logoFile.value = f }
-function onBannerChoose(e){ const f = e.target.files?.[0]; if (f) bannerFile.value = f }
+const logoPreview = ref('')
+const bannerPreview = ref('')
+const logoName = computed(() => (logoFile.value && logoFile.value.name) || '')
+const bannerName = computed(() => (bannerFile.value && bannerFile.value.name) || '')
+function revoke(url){ if (url) { try { URL.revokeObjectURL(url) } catch (e) {} } }
+function onLogoChoose(e){ const f = e && e.target && e.target.files && e.target.files[0]; if (!f) return; logoFile.value = f; revoke(logoPreview.value); logoPreview.value = URL.createObjectURL(f) }
+function onBannerChoose(e){ const f = e && e.target && e.target.files && e.target.files[0]; if (!f) return; bannerFile.value = f; revoke(bannerPreview.value); bannerPreview.value = URL.createObjectURL(f) }
 
 async function uploadFileReturnId(file, token){
   const fd = new FormData()
@@ -321,19 +379,25 @@ async function createTournament(){
       auto_approve_registrations: true,
       total_prize_pool: '0.00',
       game: selectedGameId.value,
+      stream_url: extractedUrl.value || form.value.link, // отправляем извлечённую ссылку
       ...(logoId ? { logo: logoId } : {}),
       ...(bannerId ? { banner: bannerId } : {})
     }
 
-    await $api('/tournaments/create/', {
+    const res = await $api('/tournaments/create/', {
       method: 'POST',
       body: payload,
       headers: { Authorization: `Bearer ${accessRef.value}` }
     })
 
+    const createdId = Number(res?.id ?? res?.data?.id)
     toastOk('Турнир создан')
-    // перенаправление, если нужно
-    // router.replace('/tournaments')
+    if (Number.isFinite(createdId)) {
+      router.replace(`/mytournament/${createdId}`)
+    } else {
+      // на крайний случай вернёмся в профиль
+      router.replace('/profile')
+    }
   } catch (e){
     const msg = e?.data?.detail || e?.message || 'Не удалось создать турнир'
     toastErr(msg)
@@ -346,22 +410,60 @@ async function createTournament(){
 <style>
 @import './create-tournament.css';
 
-/* Базовые стили для свитчера — под твой CSS */
-.switcher { width: 100%; }
-.switcher-container {
-  position: relative; display: inline-flex; align-items: center;
-  gap: 8px; padding: 6px; border-radius: 999px; background: var(--bg-muted, #0f172a0d); overflow: hidden;
+/* Стили для свитчера */
+
+/* Стили для загрузки файлов */
+.file-uploader {
+  display: flex; align-items: center; gap: 12px; 
+  padding: 12px 16px; border: 2px dashed #cbd5e1; 
+  border-radius: 12px; background: #f8fafc; cursor: pointer;
+  transition: all 0.3s ease; position: relative; overflow: hidden;
 }
-.switcher-btn { position: relative; z-index: 2; padding: 10px 14px; border: 0; background: transparent; border-radius: 999px; font: inherit; white-space: nowrap; cursor: pointer; transition: color .2s; }
-.switcher-btn.active { color: var(--accent-fg, #0f172a); }
-.switcher-slider {
-  position: absolute; z-index: 1; height: 36px; left: 6px; top: 50%; transform: translateY(-50%);
-  border-radius: 999px; background: var(--accent-bg, #fff); box-shadow: 0 4px 18px rgba(0,0,0,.08);
-  transition: transform .25s ease, width .25s ease;
+.file-uploader:hover { 
+  border-color: #3b82f6; background: #eff6ff; 
+  transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
 }
-@media (max-width: 768px){
-  .switcher-container { gap: 6px; padding: 6px; }
-  .switcher-btn { padding: 8px 12px; }
-  .switcher-slider { height: 32px; left: 6px; }
+.file-uploader input[type="file"] { 
+  position: absolute; opacity: 0; width: 100%; height: 100%; 
+  cursor: pointer; top: 0; left: 0;
+}
+.file-btn {
+  padding: 8px 16px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white; border-radius: 8px; font-weight: 500; font-size: 14px;
+  transition: all 0.3s ease; white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+.file-btn:hover { 
+  transform: translateY(-1px); 
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+.file-name {
+  color: #64748b; font-size: 14px; flex: 1; 
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.file-preview {
+  margin-top: 12px; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.file-preview.thumb { width: 80px; height: 80px; }
+.file-preview.banner { width: 100%; height: 120px; }
+.file-preview img { 
+  width: 100%; height: 100%; object-fit: cover; 
+  transition: transform 0.3s ease;
+}
+.file-preview:hover img { transform: scale(1.05); }
+
+/* Стили для предпросмотра URL */
+.url-preview {
+  margin-top: 8px; padding: 8px 12px; background: #f1f5f9; 
+  border-radius: 8px; border-left: 3px solid #3b82f6;
+}
+.url-label {
+  font-size: 12px; color: #64748b; font-weight: 500; display: block; margin-bottom: 4px;
+}
+.url-value {
+  font-size: 13px; color: #1e293b; font-family: monospace; 
+  word-break: break-all; background: white; padding: 4px 8px; 
+  border-radius: 4px; border: 1px solid #e2e8f0;
 }
 </style>

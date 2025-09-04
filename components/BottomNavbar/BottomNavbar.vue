@@ -237,7 +237,7 @@
                 </svg>
                 <span>ПОМОЩЬ</span>
             </NuxtLink>
-            <NuxtLink to="/organiztion" class="mobile-nav-item" @click="toggleMobileMenu">
+            <NuxtLink v-if="!isOrganizer" to="/organiztion" class="mobile-nav-item" @click="toggleMobileMenu">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="36"
@@ -274,6 +274,15 @@ const isMobileMenuOpen = ref(false)
 const toggleMobileMenu = () => {
     isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
+
+// merge organizer role check here
+const { user } = useAuth()
+const isOrganizer = computed(() => {
+    const u = user.value || {}
+    const role = String(u?.user_role || u?.role || '').toUpperCase()
+    const flags = [u?.data?.is_organizer, u?.is_organizer, u?.profile?.is_organizer].some(Boolean)
+    return role.includes('ADMIN') || role.includes('STAFF') || role.includes('ORGANIZER') || flags
+})
 </script>
 
 <style scoped>

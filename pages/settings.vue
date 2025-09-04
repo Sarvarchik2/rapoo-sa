@@ -161,6 +161,9 @@ definePageMeta({
 import { ref, reactive, h, computed, watch, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { useEventBus } from '@vueuse/core'
+const profileBus = useEventBus<'profile:updated', { updated_at?: string|number, avatar?: string }>('profile:updated')
+
 
 const IconUser = defineComponent({
     name: 'IconUser',
@@ -390,6 +393,8 @@ async function onSubmit() {
         const body = buildFormData()
 
         const saved = await $auth('/profile/update/', { method: 'PATCH', body })
+
+        
 
         await refresh()
 

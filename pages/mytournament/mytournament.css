@@ -46,6 +46,7 @@
 
 .t-tab.active {
     opacity: 1;
+    color: var(--text-white);
 }
 
 .t-tabs__indicator {

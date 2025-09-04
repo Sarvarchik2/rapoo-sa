@@ -64,35 +64,48 @@
   // лёгкая загрузка профиля только на клиенте
   const { data: prof } = await useAsyncData(
     'navbar-profile',
-    () => (isAuthenticated.value ? $auth('/profile/') : null),
+    () => (isAuthenticated.value ? $auth('/profile/') : Promise.resolve(null)),
     { watch: [isAuthenticated], server: false }
   )
   
   const avatarBroken = ref(false)
+
+  // normalize profile shape for different roles (organizer vs regular)
+  const profileType = computed<string | null>(() => (prof.value as any)?.profile_type || null)
+  const baseData = computed<any>(() => {
+    const p:any = prof.value || null
+    return profileType.value === 'organizer' ? p?.user_profile || {} : p?.data || {}
+  })
+  const baseUser = computed<any>(() => baseData.value?.user || (user.value as any) || {})
+
   const avatarUrl = computed<string | null>(() => {
     if (avatarBroken.value) return null
-    return (
-      (prof.value as any)?.data?.avatar ||
-      (user.value as any)?.avatar ||
-      null
-    )
+    const a:any = baseData.value?.avatar ?? baseUser.value?.avatar ?? (user.value as any)?.avatar ?? null
+    if (!a) return null
+    // some APIs return { file: '...' }
+    if (typeof a === 'object') return a?.file || null
+    if (typeof a === 'string') return a || null
+    return null
   })
   function onAvatarError(){ avatarBroken.value = true }
   
   const displayName = computed(() => {
-    const p = (prof.value as any)?.data?.user || {}
-    return p.first_name && p.last_name
-      ? `${p.first_name} ${p.last_name}`
-      : (user.value as any)?.username || p.username || ''
+    const p:any = baseUser.value || {}
+    const fn = p.first_name || ''
+    const ln = p.last_name  || ''
+    const full = `${fn} ${ln}`.trim()
+    return full || p.username || (user.value as any)?.username || ''
   })
   
   const initials = computed(() => {
-    const p = (prof.value as any)?.data?.user || {}
+    const p:any = baseUser.value || {}
     const fn = p.first_name || (user.value as any)?.first_name || ''
     const ln = p.last_name  || (user.value as any)?.last_name  || ''
     const name = `${fn} ${ln}`.trim()
-    if (!name) return ''
-    return name
+    const fallback = p.username || (user.value as any)?.username || ''
+    const source = name || fallback
+    if (!source) return ''
+    return source
       .split(' ')
       .filter(Boolean)
       .slice(0, 2)

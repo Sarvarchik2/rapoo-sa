@@ -91,12 +91,42 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 .right-content-tur-img{
   position: absolute;
   right: 0;
   top: 0;
   height: 100%;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+.right-content-tur-img:hover{
+  scale: 1.1;
+  transition: all 0.3s ease;
+}
+.right-content-tur:hover{
+  transition: all 0.3s ease;
+
+  background: #FFF;
+  background: linear-gradient(167deg,rgba(255, 255, 255, 1) 42%, rgba(59, 167, 255, 1) 100%);
+}
+.right-content-tur:hover h2{
+  font-family: 700;
+  scale: 1.05;
+  transition: all 0.3s ease;
+
+
+}
+.right-content-tur:hover a{
+  font-family: 700;
+  transition: all 0.3s ease;
+
+  scale: 1.05;
+}
+.right-content-tur:hover .turnament-link{
+  font-family: 700;
 }
 .right-content-tur-link-wrap{
   width: 100%;
@@ -298,6 +328,18 @@
 .cyber-olam-main-top-right-next a img:nth-of-type(2){
   left: 65%;
 }
+.cyber-olam-main-top-right-next:hover h4{
+  scale: 1.05;
+  transition: all 0.3s ease;
+}
+.cyber-olam-main-top-right-next:hover h2{
+  scale: 1.05;
+  transition: all 0.3s ease;
+}
+.cyber-olam-main-top-right-next:hover img{
+  scale: 1.05;
+  transition: all 0.3s ease;
+}
 .right-content-tur-img-next {
   position: absolute;
   bottom: 0;
@@ -322,12 +364,40 @@
   display: flex;
   align-items: center;
   border-radius: 30px;
-  padding: 10px 40px;
+  padding: 10px 60px;
   width: max-content;
   margin-top: 20px;
+  overflow: hidden;
   border: none;
+  position: relative;
+  cursor: pointer;
+}
+.cyber-olam-main-top-left-next button:hover{
+  transition: all 0.3s ease;
+  scale: 1.05;
+
+}
+.cyber-olam-main-top-left-next button svg:nth-of-type(1){
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -100%;
+}
+.cyber-olam-main-top-left-next button:hover svg:nth-of-type(1){
+  left: 0;
+  transition: all 0.3s ease;
 }
 
+.cyber-olam-main-top-left-next button svg:nth-of-type(2){
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 100%;
+}
+.cyber-olam-main-top-left-next button:hover svg:nth-of-type(2){
+  left: 72%;
+  transition: all 0.3s ease;
+}
 .main-interest{
   width: 100%;
   display: flex;
@@ -734,6 +804,9 @@
 
 }
 @media (max-width: 520px) {
+  .main-interest h2{
+    font-size: 28px;
+  }
   .main-live-item {
     width: 100%;
   }

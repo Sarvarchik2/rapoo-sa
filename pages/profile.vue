@@ -43,15 +43,29 @@
             <div v-for="t in myTournaments" :key="t.id" class="profile-achievement-item">
               <div class="place-badge first">
                 <img src="@/assets/main/kubokwhite.svg" alt="tournament" />
-                <span>{{ t.format || '—' }}</span>
+                <span>{{ formatTournamentFormat(t.format) }}</span>
               </div>
               <div class="profile-achievement-logo">
-                <img class="profile-achievement-logo-bg" src="@/assets/logo-team.svg" alt="logo" />
+                <img 
+                  v-if="getTournamentLogo(t.logo)" 
+                  :src="getTournamentLogo(t.logo) || ''" 
+                  :alt="t.name || 'tournament'" 
+                  class="profile-achievement-logo-img"
+                />
+                <img 
+                  v-else 
+                  class="profile-achievement-logo-bg" 
+                  src="@/assets/logo-team.svg" 
+                  alt="default logo" 
+                />
               </div>
               <div class="profile-achievement-text">
                 <NuxtLink :to="`/mytournament/${t.id}`" class="profile-achievement-team">{{ t.name }}</NuxtLink>
                 <span class="profile-achievement-tournament">
-                  {{ formatDate(t.tournament_start) }} · {{ feeText(t) }}
+                  {{ formatTournamentDates(t.tournament_start, t.tournament_end) }} · {{ feeText(t) }}
+                </span>
+                <span class="profile-achievement-status" :class="getStatusClass(t.status)">
+                  {{ formatTournamentStatus(t.status) }}
                 </span>
               </div>
             </div>
@@ -218,7 +232,7 @@
           Новый капитан
           <select v-model="newCaptainId" class="team-name-input" :disabled="leaveLoading" style="margin-top:8px;">
             <option :value="null" disabled>Выберите игрока</option>
-            <option v-for="m in captainCandidates" :key="memberUUID(m)" :value="memberUUID(m)">
+            <option v-for="m in captainCandidates" :key="memberUUID(m) || m.id" :value="memberUUID(m)">
               {{ m.username || '—' }}
             </option>
           </select>
@@ -464,6 +478,87 @@ function formatDate(iso?: string | null) {
 function formatNumber(n: number) {
   try { return new Intl.NumberFormat('ru-RU').format(n ?? 0) } catch { return String(n ?? 0) }
 }
+
+/** ===== турнирные утилиты ===== */
+function getTournamentLogo(logoId: any) {
+  if (!logoId) return null
+  // Если это уже URL
+  if (typeof logoId === 'string' && logoId.startsWith('http')) return logoId
+  // Если это ID, формируем URL (предполагаем, что медиа файлы доступны по /media/)
+  if (typeof logoId === 'number' || (typeof logoId === 'string' && /^\d+$/.test(logoId))) {
+    return `/media/tournament-logos/${logoId}/`
+  }
+  return null
+}
+
+function formatTournamentFormat(format: string) {
+  const formatMap: Record<string, string> = {
+    'SINGLE_ELIMINATION': 'Single Elim',
+    'DOUBLE_ELIMINATION': 'Double Elim',
+    'ROUND_ROBIN': 'Round Robin',
+    'SWISS': 'Swiss',
+    'BRACKET': 'Bracket'
+  }
+  return formatMap[format] || format || '—'
+}
+
+function formatTournamentDates(startDate: string, endDate: string) {
+  if (!startDate) return '—'
+  try {
+    const start = new Date(startDate)
+    const end = endDate ? new Date(endDate) : null
+    
+    const startStr = start.toLocaleDateString('ru-RU', { 
+      day: '2-digit', 
+      month: '2-digit',
+      year: '2-digit'
+    })
+    
+    if (!end || start.getTime() === end.getTime()) {
+      return startStr
+    }
+    
+    const endStr = end.toLocaleDateString('ru-RU', { 
+      day: '2-digit', 
+      month: '2-digit',
+      year: '2-digit'
+    })
+    
+    // Если в том же году, показываем только даты
+    if (start.getFullYear() === end.getFullYear()) {
+      return `${startStr} - ${endStr}`
+    }
+    
+    return `${startStr} - ${endStr}`
+  } catch {
+    return '—'
+  }
+}
+
+function formatTournamentStatus(status: string) {
+  const statusMap: Record<string, string> = {
+    'REGISTRATION_OPEN': 'Регистрация открыта',
+    'REGISTRATION_CLOSED': 'Регистрация закрыта',
+    'IN_PROGRESS': 'Идёт турнир',
+    'COMPLETED': 'Завершён',
+    'CANCELLED': 'Отменён',
+    'UPCOMING': 'Скоро'
+  }
+  return statusMap[status] || status || '—'
+}
+
+function getStatusClass(status: string | null) {
+  if (!status) return 'status-default'
+  const classMap: Record<string, string> = {
+    'REGISTRATION_OPEN': 'status-open',
+    'REGISTRATION_CLOSED': 'status-closed',
+    'IN_PROGRESS': 'status-active',
+    'COMPLETED': 'status-completed',
+    'CANCELLED': 'status-cancelled',
+    'UPCOMING': 'status-upcoming'
+  }
+  return classMap[status] || 'status-default'
+}
 </script>
 
 <style>
@@ -479,6 +574,59 @@ function formatNumber(n: number) {
 
 .state.error {
   color: #e11d48
+}
+
+/* Стили для логотипов турниров */
+.profile-achievement-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Стили для статусов турниров */
+.profile-achievement-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.status-open {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-closed {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-active {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-completed {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.status-upcoming {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+
+.status-default {
+  background: #f1f5f9;
+  color: #64748b;
 }
 
 </style>

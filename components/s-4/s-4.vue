@@ -104,7 +104,7 @@
   
   <style>
   @import './setka.css';
-  .bracket-match.clickable { cursor: pointer; box-shadow: 0 0 0 2px rgba(59,130,246,.6) inset }
+  .bracket-match.clickable { cursor: pointer;  }
   .bracket-match.starting { opacity: .6; pointer-events: none }
   .match-status { margin-top: 6px; font-size: 12px; opacity: .7 }
   </style>

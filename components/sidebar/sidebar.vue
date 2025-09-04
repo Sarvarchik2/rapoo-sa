@@ -142,7 +142,7 @@
                     </li>
                 </NuxtLink>
 
-                <NuxtLink to="/organiztion" class="sidebar-content-item" active-class="active">
+                <NuxtLink v-if="!isOrganizer" to="/organiztion" class="sidebar-content-item" active-class="active">
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path
@@ -176,7 +176,13 @@
 </template>
 
 <script setup>
-
+const { user } = useAuth()
+const isOrganizer = computed(() => {
+    const u = user.value || {}
+    const role = String(u?.user_role || u?.role || '').toUpperCase()
+    const flags = [u?.data?.is_organizer, u?.is_organizer, u?.profile?.is_organizer].some(Boolean)
+    return role.includes('ADMIN') || role.includes('STAFF') || role.includes('ORGANIZER') || flags
+})
 </script>
 
 <style scoped>
