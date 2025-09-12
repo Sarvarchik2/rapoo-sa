@@ -270,7 +270,6 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import Turnirsnew from '@/components/turnirsnew/turnirsnew.vue'
 
