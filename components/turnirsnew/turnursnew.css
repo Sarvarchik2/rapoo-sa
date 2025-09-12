@@ -53,6 +53,8 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    margin-top: 12px;
+    text-align: center;
 }
 .news-latest-left-text a{
     color: var(--text-bold-blue);

@@ -504,6 +504,7 @@ onMounted(() => {
         <h2>Турнирная сетка</h2>
       </div>
       <S-4 v-if="isSingle4Ready" :semi="semiUI" :finalMatch="finalUI" :winner="winnerUI" />
+      <!-- <TurnamentSingelCsGo v-else/> -->
       <div v-else class="tournaments-teams-empty">Сетка появится после генерации или формат/размер иной.</div>
 
       <!-- Участники -->

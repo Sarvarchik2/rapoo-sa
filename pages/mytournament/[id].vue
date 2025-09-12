@@ -42,7 +42,9 @@
           :winner="winnerUI"
           :onStartMatch="startMatch"
         />
-        <div v-else class="t-empty">Сетка будет показана после генерации или формат/размер ещё не поддержан текущим шаблоном.</div>
+        <!-- <div v-else class="t-empty">Сетка будет показана после генерации или формат/размер ещё не поддержан текущим шаблоном.</div> -->
+      <TurnamentSingelCsGo v-else/>
+
       </section>
 
       <section v-show="activeTab==='participants'" class="t-participants">

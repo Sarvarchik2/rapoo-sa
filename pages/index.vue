@@ -42,7 +42,7 @@
       <div class="cyber-olam-main-top-left cyber-olam-main-top-left-next">
         <div class="cyber-olam-main-top-left-top">
           <h2>БЛИЖАЙШИЕ ТУРНИРЫ</h2>
-          <NuxtLink to="/">
+          <NuxtLink to="/tournaments" class="next-turnament-link">
             Все
             <img src="@/assets/main/arrow-right.svg" alt="live" />
           </NuxtLink>
@@ -176,7 +176,7 @@
     <!-- ===== Турниры (без изменений) ===== -->
     <div class="main-title-wrap">
       <h2>Турниры</h2>
-      <NuxtLink to="/">
+      <NuxtLink to="/tournaments">
         Все
         <img src="@/assets/main/arrow-right.svg" alt="live" />
       </NuxtLink>
@@ -230,15 +230,15 @@
     </section>
 
     <!-- ===== Топ трансляций (без изменений) ===== -->
-    <div class="main-title-wrap">
+    <!-- <div class="main-title-wrap">
       <h2>Топ трансляций</h2>
-      <NuxtLink to="/">
+      <NuxtLink to="/streams">
         Все
         <img src="@/assets/main/arrow-right.svg" alt="live" />
       </NuxtLink>
-    </div>
-
-    <section class="main-live">
+    </div> -->
+    <TopStreams />
+    <!-- <section class="main-live">
       <div class="main-live-item" v-for="i in 3" :key="i">
         <div class="main-live-item-top">
           <img src="@/assets/live/cs.png" alt="live" />
@@ -261,7 +261,7 @@
           </button>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- ===== Тост «войдите в аккаунт» ===== -->
     <div v-if="showLoginHint" class="login-hint">

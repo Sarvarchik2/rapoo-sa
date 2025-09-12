@@ -225,7 +225,7 @@ watch([categories2, buttonRefs2], () => {
 })
 
 /* ---- счетчики/формы ---- */
-const allowedParticipants = [4, 8, 16, 32]
+const allowedParticipants = [4, 5, 8, 16, 32,]
 const minPlayers = allowedParticipants[0]
 const maxPlayers = allowedParticipants[allowedParticipants.length - 1]
 const participants = ref(minPlayers)
