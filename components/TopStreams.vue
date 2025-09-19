@@ -1,5 +1,5 @@
 <template>
-  <div class="top-streams">
+  <div class="top-streams"> 
     <div class="main-title-wrap">
       <h2>Топ трансляций</h2>
       <NuxtLink to="/streams">
@@ -7,17 +7,15 @@
         <img src="@/assets/main/arrow-right.svg" alt="live" />
       </NuxtLink>
     </div>
-
     <section class="main-live">
       <div v-if="pending" class="state">Загрузка…</div>
       <div v-else-if="error" class="state error">Не удалось загрузить стримы</div>
-
       <div class="main-live" v-else>
         <NuxtLink
-            v-for="s in topStreams"
-            :key="s.id"
-            :to="`/streams-more/${s.id}`"
-            class="main-live-item"
+          v-for="s in topStreams"
+          :key="s.id"
+          :to="`/streams-more/${s.id}`"
+          class="main-live-item"
         >
           <div class="main-live-item-top">
             <img :src="streamCover(s)" alt="live" />
@@ -27,7 +25,6 @@
             </span>
             <span>{{ viewersText(s) }}</span>
           </div>
-
           <div class="main-live-item-bottom">
             <img src="@/assets/live/comand.svg" alt="live" />
             <div class="main-live-item-bottom-text">
@@ -37,36 +34,41 @@
             </div>
           </div>
         </NuxtLink>
-
-        <div v-if="topStreams.length === 0" class="tournaments-teams-empty">
-          Пока нет стримов.
-        </div>
+        <div v-if="topStreams.length === 0" class="tournaments-teams-empty">Пока нет стримов.</div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRuntimeConfig } from '#imports'
+import { $fetch } from 'ofetch'
 
-// используем тот же клиент, что и в других местах (проксируется, https, заголовки и т.д.)
-const { $api } = useNuxtApp()
+const pending = ref(true)
+const error = ref(null)
+const categoriesData = ref([])
 
-// SSR-дружелюбно: useAsyncData сам загрузит на сервере/клиенте
-const { data, pending, error } = await useAsyncData('streams-main', () =>
-    $api('/streaming/main/')
-)
+const config = useRuntimeConfig()
+const API_BASE = (config.public?.apiBase || '').toString()
 
-// нормализуем данные
-const categoriesData = computed(() => {
-  const res = data.value
-  return Array.isArray(res?.results) ? res.results : []
-})
+async function fetchStreams() {
+  pending.value = true; error.value = null
+  try {
+    const url = `${API_BASE}/streaming/main/`
+    const res = await $fetch(url)
+    categoriesData.value = Array.isArray(res?.results) ? res.results : []
+  } catch (e) {
+    error.value = e
+  } finally {
+    pending.value = false
+  }
+}
+onMounted(fetchStreams)
 
-/* ===== helpers ===== */
-const PLACEHOLDER = '/live/cs.png'
-
-function extractYoutubeId (url) {
+// Вспомогательные функции для картинок и текста
+const PLACEHOLDER = '/assets/live/cs.png'
+function extractYoutubeId(url) {
   try {
     const u = new URL(String(url))
     if (u.hostname.includes('youtu.be')) return u.pathname.split('/')[1] || null
@@ -78,8 +80,7 @@ function extractYoutubeId (url) {
   } catch {}
   return null
 }
-
-function extractTwitchChannel (url) {
+function extractTwitchChannel(url) {
   try {
     const u = new URL(String(url))
     if (u.hostname.includes('twitch.tv')) {
@@ -88,12 +89,12 @@ function extractTwitchChannel (url) {
       return parts[0] || null
     }
     if (u.hostname.includes('player.twitch.tv')) {
-      return u.searchParams.get('channel')
+      const ch = u.searchParams.get('channel')
+      return ch || null
     }
   } catch {}
   return null
 }
-
 const streamCover = (s) => {
   const url = s?.hls_url || s?.rtmp_url || s?.embed_url || s?.url || ''
   const yid = extractYoutubeId(url)
@@ -102,24 +103,21 @@ const streamCover = (s) => {
   if (tch) return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${tch}-640x360.jpg`
   return PLACEHOLDER
 }
+const liveBadge = (s) => (String(s?.status || s?.is_live || '').toUpperCase().includes('LIVE') ? 'ПРЯМОЙ ЭФИР' : 'ОФФЛАЙН')
+const viewersText = (s) => s?.viewers ? `${s.viewers} зрителей` : ''
 
-const liveBadge = (s) =>
-    String(s?.status || s?.is_live || '').toUpperCase().includes('LIVE') ? 'ПРЯМОЙ ЭФИР' : 'ОФФЛАЙН'
-
-const viewersText = (s) => (s?.viewers ? `${s.viewers} зрителей` : '')
-
-/* ===== выбор топ-3 ===== */
+// Логика выбора топ-3 трансляций
 const topStreams = computed(() => {
   const cats = categoriesData.value || []
   let result = []
 
-  // по одной из каждой категории
+  // Собираем по одной из каждой категории
   for (let i = 0; i < cats.length && result.length < 3; i++) {
     const streams = Array.isArray(cats[i]?.category_streams) ? cats[i].category_streams : []
     if (streams.length) result.push(streams[0])
   }
 
-  // добираем из остатка
+  // Если меньше 3 — добираем из остальных (по порядку)
   if (result.length < 3) {
     let extra = []
     for (let i = 0; i < cats.length; i++) {
@@ -131,18 +129,20 @@ const topStreams = computed(() => {
     }
   }
 
-  // одна категория — берём первые три
+  // Если только одна категория — берём 3 из неё
   if (cats.length === 1) {
     const streams = Array.isArray(cats[0]?.category_streams) ? cats[0].category_streams : []
     result = streams.slice(0, 3)
   }
 
+  // Если всё равно меньше 3 — просто возвращаем что есть
   return result.slice(0, 3)
 })
 </script>
 
+
 <style>
-.top-streams { width: 100%; }
-.state { text-align: center; margin: 20px 0; opacity: .8; }
-.state.error { color: #f87171; }
+.top-streams {
+    width: 100%;
+}
 </style>

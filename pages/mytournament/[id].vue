@@ -35,15 +35,7 @@
 
     <div class="t-content">
       <section v-show="activeTab==='grid'">
-        <S-4
-          v-if="isSingle4Ready"
-          :semi="semiUI"
-          :finalMatch="finalUI"
-          :winner="winnerUI"
-          :onStartMatch="startMatch"
-        />
-        <!-- <div v-else class="t-empty">Сетка будет показана после генерации или формат/размер ещё не поддержан текущим шаблоном.</div> -->
-      <TurnamentSingelCsGo v-else/>
+  <TurnamentSingelCsGo :endpoint="`${API_BASE}/tournaments/page/${id || route.params.id}/bracket/`" />
 
       </section>
 

@@ -234,7 +234,7 @@ onMounted(() => { fetchStream() })
 
 <style>
 
-@import './streams-more.css';
+@import './streams-more.css'
 
 
 </style>
