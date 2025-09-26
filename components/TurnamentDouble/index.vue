@@ -253,9 +253,7 @@
       </div>
     </div>
   </div>
-</template>
 
-<template>
   <div v-if="showMatchPopup" class="match-popup-overlay" @click="showMatchPopup=false">
     <div class="match-popup" @click.stop>
       <div class="match-popup-header">
