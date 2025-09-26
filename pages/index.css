@@ -888,4 +888,26 @@
     font-size: 16px;
     padding: 10px 40px;
   }
+  .main-title-wrap h2{
+    font-size: 28px;
+  }
+}
+
+
+
+@media (max-width: 440px) {
+  .main-interest h2{
+    font-size: 24px;
+  }
+  .main-interest-link{
+    padding: 7px 13px;
+  }
+  .main-interest-link img {
+    width: 13px;
+    height: 13px;
+}
+.main-title-wrap h2{
+    font-size: 24px;
+}
+
 }

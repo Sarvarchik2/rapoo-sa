@@ -25,7 +25,12 @@
         <div class="card-image">
           <img :src="img(topArticle) || '/assets/news/news1.svg'" :alt="title(topArticle)" />
           <div class="card-date">{{ formatDate(topArticle?.publish_date) }}</div>
+           <span class="metric views">
+                {{ topArticle?.view_count ?? 0 }}
+                <img src="/assets/news/view.svg" alt="views" />
+              </span>
         </div>
+        
         <div class="card-content">
           <h3 class="card-title">{{ title(topArticle) }}</h3>
           <div class="card-content-text">
@@ -47,10 +52,7 @@
                 </button>
               </div>
 
-              <span class="metric views">
-                {{ topArticle?.view_count ?? 0 }}
-                <img src="/assets/news/view.svg" alt="views" />
-              </span>
+             
             </div>
           </div>
         </div>
@@ -66,12 +68,16 @@
           <div class="card-image">
             <img :src="img(a) || '/assets/news/news2.svg'" :alt="title(a)" />
             <div class="card-date">{{ formatDate(a?.publish_date) }}</div>
+              <span class="metric views">
+                  {{ a?.view_count ?? 0 }}
+                  <img src="/assets/news/view.svg" alt="views" />
+                </span>
           </div>
           <div class="card-content">
             <h3 class="card-title">{{ title(a) }}</h3>
             <div class="card-content-text">
-              <p class="card-description">{{ desc(a) }}</p>
-              <div class="card-metrics">
+              <!-- <p class="card-description">{{ desc(a) }}</p> -->
+              <div class="card-metrics card-metrics-secondary">
                 <div class="reactions">
                   <button
                     v-for="r in reactionsFor(a)"
@@ -88,10 +94,7 @@
                   </button>
                 </div>
 
-                <span class="metric views">
-                  {{ a?.view_count ?? 0 }}
-                  <img src="/assets/news/view.svg" alt="views" />
-                </span>
+              
               </div>
             </div>
           </div>

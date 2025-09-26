@@ -1,15 +1,24 @@
 .cyber-olam{
-    width: 100%;
+    /* max-width: 1980px;
+    margin: 0 auto; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+#__nuxt{
+    max-width: 1980px;
+    margin: 0 auto;
+}
 
 .cyber-olam-content{
+
     width: 100%;
     display: flex;
     padding-top: 117px;
     overflow: hidden;
+    /* Make main area take remaining height so footer can stick to bottom */
+    flex: 1 1 auto;
+    min-height: 0;
     background-color: var(--bg-primary);
     gap: 23px;
 }
@@ -31,6 +40,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    /* Allow content to grow and push footer down */
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 
@@ -38,10 +50,13 @@
 @media (max-width: 769px) {
 .cyber-olam-content-wrapper{
     width: 100%;
+    flex: 1 1 auto;
 }
     .cyber-olam-content {
         padding-top: 0; 
         gap: 0; 
+        flex: 1 1 auto;
+        min-height: 0;
     }
     
     .cyber-olam::before {

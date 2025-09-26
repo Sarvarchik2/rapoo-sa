@@ -374,6 +374,12 @@ const isStarted = computed(() => {
   const s = statusText.value
   return ['STARTED', 'ACTIVE', 'ONGOING', 'IN_PROGRESS', 'LIVE'].includes(s) || (Array.isArray(rounds.value) && rounds.value.length > 0 && s !== 'REGISTRATION_OPEN')
 })
+const formatDisplay = computed(() => {
+  const f = t.value?.format
+  if (f === 'SINGLE_ELIMINATION') return 'Одиночное выбытие'
+  if (f === 'DOUBLE_ELIMINATION') return 'Двойное выбытие'
+  return f || 'Не указан'
+})
 const showStartButton = computed(() => isOrganizer.value && !isStarted.value && ALLOW_START.has(statusText.value))
 const canStart = computed(() => showStartButton.value && participants.value.length >= 2)
 const startHint = computed(() => {
@@ -499,12 +505,34 @@ onMounted(() => {
         </div>
       </div>
 
-  <!-- Сетка (Single Elimination) -->
+      <!-- Сетка -->
       <div class="main-title-wrap">
         <h2>Турнирная сетка</h2>
       </div>
-  <TurnamentSingelCsGo :endpoint="`${API_BASE}/tournaments/page/${t?.id || id}/bracket/`" />
-      <!-- <div v-else class="tournaments-teams-empty">Сетка появится после генерации или формат/размер иной.</div> -->
+      <div v-if="!isStarted || !rounds.length" class="bracket-placeholder">
+        <div class="bracket-placeholder-content">
+          <div class="bracket-placeholder-icon">🏆</div>
+          <h3>Сетка еще не сгенерирована</h3>
+          <p>Формат турнира: <strong>{{ formatDisplay }}</strong></p>
+          <p>Сетка появится после запуска турнира организатором.</p>
+        </div>
+      </div>
+      <div v-else-if="t?.format === 'SINGLE_ELIMINATION' && rounds.length > 0">
+        <TurnamentSingelCsGo 
+          :endpoint="`${API_BASE}/tournaments/page/${t?.id || id}/bracket/`" 
+          :tournamentId="t?.id || id" 
+          clickAction="navigate"
+          :key="`single-${t?.id}`" 
+        />
+      </div>
+      <div v-else-if="t?.format === 'DOUBLE_ELIMINATION' && rounds.length > 0">
+        <TurnamentDouble 
+          :endpoint="`${API_BASE}/tournaments/page/${t?.id || id}/bracket/`" 
+          :tournamentId="t?.id || id" 
+          clickAction="navigate"
+          :key="`double-${t?.id}`" />
+      </div>
+      <div v-else class="tournaments-teams-empty">Формат турнира не поддерживается.</div>
 
       <!-- Участники -->
       <div class="main-title-wrap">
@@ -518,7 +546,6 @@ onMounted(() => {
       </div>
       <div v-else class="tournaments-teams-empty">Пока нет участников.</div>
 
-      <!-- Кнопка «Стать участником» (не показывать организатору) -->
       <ClientOnly v-if="!isOrganizer">
         <div class="participants-actions">
           <div v-if="isAlreadyJoined" class="note ok">Ваша команда уже участвует ✅</div>
@@ -639,5 +666,43 @@ onMounted(() => {
   background: var(--bg-blue);
   color: #fff;
   border-radius: 10px;
+}
+
+.bracket-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 15px;
+  margin: 20px 0;
+  border: 2px dashed #cbd5e0;
+}
+
+.bracket-placeholder-content {
+  text-align: center;
+  color: #4a5568;
+}
+
+.bracket-placeholder-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+.bracket-placeholder-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+}
+
+.bracket-placeholder-content p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #718096;
+}
+
+.bracket-placeholder-content strong {
+  color: #3182ce;
 }
 </style>

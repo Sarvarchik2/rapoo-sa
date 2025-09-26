@@ -35,7 +35,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="player-stats">
+                <div class="player-stats player-stats-rate">
                     <div class="stat-item">
                         <span class="label">Возраст:</span>
                         <span class="value">25 лет</span>
@@ -50,9 +50,9 @@
 
         <!-- Achievements Section -->
         <div class="achievements-section">
-            <h2 class="section-title">Достижения</h2>
+            <!-- <h2 class="section-title">Достижения</h2>
             <div class="switcher">
-                <div class="switcher-container">
+                <div class="switcher-container switcher-container-rate">
                     <button 
                         v-for="(category, index) in categories" 
                         :key="index"
@@ -70,7 +70,7 @@
                         }"
                     ></div>
                 </div>
-            </div>
+            </div> -->
             <div class="summary-stats">
                 <div class="stat-box">
                     <span class="stat-number-rate">9</span>

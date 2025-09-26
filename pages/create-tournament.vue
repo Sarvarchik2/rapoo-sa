@@ -65,6 +65,9 @@
         <div class="tb-value" aria-live="polite">{{ participants }}</div>
         <button type="button" class="tb-btn plus" @click="incPlayers" :disabled="participants >= maxPlayers" aria-label="Увеличить">+</button>
       </div>
+      <!-- <div class="tb-counter-hint">
+        Доступные значения: {{ allowedParticipants.value ? allowedParticipants.value.join(', ') : '2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 48, 64, 128' }}
+      </div> -->
 
       <div class="tb-grid">
         <div class="tb-field">
@@ -114,6 +117,45 @@
         </div>
         <div class="tb-field">
           <input v-model="form.time" type="time" class="tb-input" placeholder="Время" />
+        </div>
+      </div>
+
+      <h3 class="tb-title">Дополнительные настройки</h3>
+      <div class="tb-grid">
+        <div class="tb-field">
+          <label class="tb-label">Минимальный уровень игрока</label>
+          <input v-model.number="form.min_player_level" type="number" min="1" max="100" class="tb-input" placeholder="1" />
+        </div>
+
+        <div class="tb-field">
+          <label class="tb-label">Призовой фонд</label>
+          <input v-model="form.total_prize_pool" type="text" class="tb-input" placeholder="0.00" />
+        </div>
+
+        <div class="tb-field tb-field--full">
+          <label class="tb-label">Правила турнира</label>
+          <textarea v-model.trim="form.rules" class="tb-textarea" rows="4" placeholder="Опишите правила турнира"></textarea>
+        </div>
+
+        <div class="tb-field tb-field--full">
+          <label class="tb-label">Дополнительная информация</label>
+          <textarea v-model.trim="form.additional_info" class="tb-textarea" rows="3" placeholder="Дополнительная информация о турнире"></textarea>
+        </div>
+
+        <div class="tb-field">
+          <label class="tb-label">Настройки приватности</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input v-model="form.is_public" type="checkbox" />
+              <span class="checkmark"></span>
+              Публичный турнир
+            </label>
+            <label class="checkbox-item">
+              <input v-model="form.auto_approve_registrations" type="checkbox" />
+              <span class="checkmark"></span>
+              Автоматическое одобрение регистраций
+            </label>
+          </div>
         </div>
       </div>
     </section>
@@ -225,15 +267,36 @@ watch([categories2, buttonRefs2], () => {
 })
 
 /* ---- счетчики/формы ---- */
-const allowedParticipants = [4, 5, 8, 16, 32,]
-const minPlayers = allowedParticipants[0]
-const maxPlayers = allowedParticipants[allowedParticipants.length - 1]
-const participants = ref(minPlayers)
-const pIndex = computed(() => Math.max(0, allowedParticipants.indexOf(participants.value)))
-const canDec = computed(() => pIndex.value > 0)
-const canInc = computed(() => pIndex.value < allowedParticipants.length - 1)
-function incPlayers(){ if (canInc.value) participants.value = allowedParticipants[pIndex.value + 1] }
-function decPlayers(){ if (canDec.value) participants.value = allowedParticipants[pIndex.value - 1] }
+const allowedParticipants = computed(() => {
+  const fmt = selectedFormat.value
+  if (fmt === 'round_robin') {
+    // Для кругового турнира можно любое количество участников
+    return [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16, 24, 32]
+  } else {
+    // Для elimination форматов нужны четные числа
+    return [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,  14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 32, 48, 64, 128]
+  }
+})
+const minPlayers = computed(() => allowedParticipants.value ? allowedParticipants.value[0] : 2)
+const maxPlayers = computed(() => allowedParticipants.value ? allowedParticipants.value[allowedParticipants.value.length - 1] : 128)
+const participants = ref(2) // начинаем с минимума
+const pIndex = computed(() => allowedParticipants.value ? Math.max(0, allowedParticipants.value.indexOf(participants.value)) : 0)
+const canDec = computed(() => allowedParticipants.value ? pIndex.value > 0 : false)
+const canInc = computed(() => allowedParticipants.value ? pIndex.value < allowedParticipants.value.length - 1 : false)
+function incPlayers(){ if (canInc.value && allowedParticipants.value) participants.value = allowedParticipants.value[pIndex.value + 1] }
+function decPlayers(){ if (canDec.value && allowedParticipants.value) participants.value = allowedParticipants.value[pIndex.value - 1] }
+
+// Следим за изменением формата и корректируем количество участников
+watch(selectedFormat, () => {
+  if (!allowedParticipants.value) return
+  // Если текущий participants не в списке разрешенных для нового формата, устанавливаем ближайший разрешенный
+  if (!allowedParticipants.value.includes(participants.value)) {
+    const oldCount = participants.value
+    const currentIndex = allowedParticipants.value.findIndex(p => p >= participants.value)
+    participants.value = currentIndex >= 0 ? allowedParticipants.value[currentIndex] : allowedParticipants.value[0]
+    toastOk(`Количество участников изменено с ${oldCount} на ${participants.value} для соответствия формату турнира`)
+  }
+})
 
 const splitEnabled = ref(true)     // опция UI (на бэк сейчас не шлём, при необходимости добавишь)
 const teamsRequired = ref(false)   // влияет на auto_approve_registrations? сейчас просто поле UI
@@ -243,7 +306,13 @@ const form = ref({
   link: '',
   description: '',
   date: '',
-  time: ''
+  time: '',
+  rules: '',
+  additional_info: '',
+  min_player_level: 1,
+  total_prize_pool: '0.00',
+  is_public: true,
+  auto_approve_registrations: true
 })
 
 const extractedUrl = ref('')
@@ -372,12 +441,12 @@ async function createTournament(){
       registration_end,
       tournament_start,
       tournament_end,
-      min_player_level: 1,
-      rules: '',
-      additional_info: '',
-      is_public: true,
-      auto_approve_registrations: true,
-      total_prize_pool: '0.00',
+      min_player_level: form.value.min_player_level,
+      rules: form.value.rules,
+      additional_info: form.value.additional_info,
+      is_public: form.value.is_public,
+      auto_approve_registrations: form.value.auto_approve_registrations,
+      total_prize_pool: form.value.total_prize_pool,
       game: selectedGameId.value,
       stream_url: extractedUrl.value || form.value.link, // отправляем извлечённую ссылку
       ...(logoId ? { logo: logoId } : {}),
@@ -465,5 +534,50 @@ async function createTournament(){
   font-size: 13px; color: #1e293b; font-family: monospace; 
   word-break: break-all; background: white; padding: 4px 8px; 
   border-radius: 4px; border: 1px solid #e2e8f0;
+}
+
+/* Стили для чекбоксов */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+}
+.checkbox-item input[type="checkbox"] {
+  display: none;
+}
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  background: white;
+  position: relative;
+  transition: all 0.2s ease;
+}
+.checkbox-item input[type="checkbox"]:checked + .checkmark {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+.checkbox-item input[type="checkbox"]:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.checkbox-item:hover .checkmark {
+  border-color: #3b82f6;
 }
 </style>

@@ -433,7 +433,9 @@
     .tournament-info-blocks {
         flex-direction: column;
     }
-    
+    .tournament-main-text h1{
+        font-size: 55px;
+    }
     .info-block {
         min-width: auto;
     }

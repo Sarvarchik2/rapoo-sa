@@ -69,11 +69,12 @@
 /* Main Content Area */
 .main-content {
     background: white;
-    border-radius: 20px;
     overflow: hidden;
     margin-top: 30px;
 }
-
+.main-content-rate{
+    border-radius: 20px;
+}
 /* Table Header */
 .table-header {
     display: grid;

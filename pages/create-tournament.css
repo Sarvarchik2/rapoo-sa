@@ -242,6 +242,13 @@
     font-size: 20px;
     color: #111827;
   }
+  .tb-counter-hint{
+    font-size: 14px;
+    color: var(--text-grey);
+    margin-top: -20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
   
   /* Сетка 2 колонки */
   .tb-grid{

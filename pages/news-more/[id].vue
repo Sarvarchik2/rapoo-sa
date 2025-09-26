@@ -348,7 +348,6 @@ async function onReactClick(label) {
 
 .article-meta {
   color: #6b7280;
-  margin-top: 6px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;

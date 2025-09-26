@@ -570,7 +570,7 @@ function getStatusClass(status: string | null) {
 
 <style>
 @import './profile.css';
-@import './tournament.css';
+@import './match/[tournamentId]/match.css';
 @import './create-team.css';
 @import './rate-player.css';
 

@@ -8,7 +8,8 @@
   position: relative;
   overflow: hidden;
   background: var(--bg-white);
-  margin-top: 100px;
+  /* Let the layout's flex and gap handle spacing; using auto ensures stick-to-bottom */
+  margin-top: auto;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }

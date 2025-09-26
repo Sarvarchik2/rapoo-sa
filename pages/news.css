@@ -151,9 +151,18 @@
     gap: 15px;
     align-items: center;
 }
-
+.card-metrics-secondary{
+    width: 100%;
+    justify-content: end;
+}
 .metric {
+        position: absolute;
+    top: 15px;
+    left: 15px;
+    color: white;
+    padding: 8px 12px;
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     gap: 5px;
     font-size: 14px;
@@ -174,7 +183,6 @@
 
 .metric.views img {
     width: 16px;
-    height: 16px;
 }
 
 /* Right Cards Container */
@@ -295,6 +303,21 @@
     background: #0056b3;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+@media (max-width: 1025px) {
+.card-content{
+    padding: 13px;
+}
+.reaction-btn{
+    padding: 3px 7px!important;
+}
+.reaction-btn img{
+    width: 14px!important;
+    height: 14px!important;
+}
+.reaction-btn b{
+    font-size: 12px!important;
+}
 }
 
 /* Responsive Design */

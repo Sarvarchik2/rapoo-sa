@@ -264,7 +264,6 @@ function nextPage() { if (page.value < totalPages.value) page.value++ }
         </div>
         <div class="tournaments-wrapper-item-text">
           <h2>{{ t.name }}</h2>
-          <p>{{ organizerName(t.organizer) }}</p>
           <!-- ссылка оставляю как ты просил -->
           <NuxtLink :to="`/tournaments-more/${t.id}`">
             Подробнее

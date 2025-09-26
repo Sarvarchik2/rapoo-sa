@@ -3,6 +3,7 @@
     top: 30px;
     left: 50%;
     transform: translateX(-50%);
+    max-width: 1980px;
     width: calc(100% - 100px);
     height: 78px;
     border-radius: 50px;

@@ -10,18 +10,28 @@
       </label>
       <p v-if="errors.email" class="err">{{ errors.email }}</p>
 
-      <label>
+      <label class="password-label">
         <img src="/assets/login/user.svg" alt="password">
-        <input type="password" placeholder="Password" v-model="form.password" :class="{ 'is-error': errors.password }" />
+        <input :type="showPassword ? 'text' : 'password'" placeholder="Password" v-model="form.password" :class="{ 'is-error': errors.password }" />
+        <button type="button" @click="showPassword = !showPassword" class="eye-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            <line v-if="!showPassword" x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
       </label>
       <NuxtLink class="login-link" to="/registration">
         У вас еще нет аккаунт? Зарегестрируйтесь!
+      </NuxtLink>
+       <NuxtLink class="login-link" to="/">
+        Войти как гость
       </NuxtLink>
       <p v-if="errors.password" class="err">{{ errors.password }}</p>
 
       <p v-if="errors.common" class="err">{{ errors.common }}</p>
 
-      <button type="submit" :disabled="loading">{{ loading ? 'Проверяем…' : 'Войти' }}</button>
+      <button class="login-page-wrapper-button" type="submit" :disabled="loading">{{ loading ? 'Проверяем…' : 'Войти' }}</button>
     </form>
   </div>
 </template>
@@ -34,6 +44,7 @@ const { login } = useAuth()
 const form = reactive({ email: '', password: '' })
 const errors = reactive({ email: '', password: '', common: '' })
 const loading = ref(false)
+const showPassword = ref(false)
 
 function validate() {
   errors.email = errors.password = errors.common = ''
@@ -62,4 +73,34 @@ async function handleLogin() {
 @import './login.css';
 .err { color:#e53935; font-size:12px; margin-top:-8px; align-self:flex-start }
 .is-error { border:1px solid #e53935!important }
+.password-label {
+  position: relative;
+}
+.password-label input {
+  padding-right: 40px;
+}
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #666;
+  transition: color 0.3s;
+}
+.eye-btn:hover {
+  color: #333;
+}
+.eye-btn svg {
+  transition: transform 0.3s;
+}
+.eye-btn:active svg {
+  transform: scale(0.9);
+}
+.eye-btn svg line {
+  transition: opacity 0.3s;
+}
 </style>

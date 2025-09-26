@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="main-content">
+        <div class="main-content main-content-rate">
             <div class="table-header">
                 <div class="header-place">Место</div>
                 <div class="header-team">Команда</div>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="main-content">
+        <div class="main-content main-content-rate">
             <div class="table-header">
                 <div class="players-place">Достижения игроков</div>
             </div>

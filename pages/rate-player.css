@@ -61,7 +61,7 @@
 .player-photo {
     flex-shrink: 0;
     width: 220px;
-    height: 220px;
+    /* height: 220px; */
 }
 
 .profile-img {
@@ -132,7 +132,9 @@
     flex-direction: column;
     gap: 15px;
 }
-
+.player-stats-rate{
+    align-items: start;
+}
 .stat-item {
     display: flex;
     gap: 10px;
@@ -183,7 +185,9 @@
     gap: 8px;
     padding: 4px;
 }
-
+.switcher-container-rate{
+    background: #a3a3a358;
+}
 .switcher-btn {
     position: relative;
     padding: 15px 24px;

@@ -172,5 +172,5 @@
 <style>
 @import './rate-team.css';
 @import './rate.css';
-@import './tournament.css'
+@import './match/[tournamentId]/match.css'
 </style>
