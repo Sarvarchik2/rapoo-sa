@@ -1,0 +1,462 @@
+/* Tournament Double Elimination Styles */
+
+/* Test Panel Styles */
+.tournament-double-test-panel {
+  position: absolute;
+  top: 80px;
+  left: 24px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+}
+
+.test-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: #fff;
+}
+
+.test-btn {
+  padding: 6px 12px;
+  background: #6bb6ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.test-btn:hover {
+  background: #5aa5ef;
+  transform: translateY(-1px);
+}
+
+.test-btn.toggle {
+  background: #ff6b6b;
+}
+
+.test-btn.toggle:hover {
+  background: #ef5555;
+}
+
+.tournament-double-bracket-wrapper {
+  height: 80vh;
+  width: 100%;
+  background: transparent;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow: auto;
+  position: relative;
+}
+
+.tournament-double-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 14px;
+  position: absolute;
+  right: 50px;
+  top: 20px;
+  z-index: 10;
+}
+
+.tournament-double-zoom-btn {
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #6bb6ff;
+  background: #6bb6ff;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tournament-double-zoom-btn:hover {
+  background: #5aa5ef;
+}
+
+.tournament-double-bracket-scroll {
+  width: 100%;
+  height: 100%;
+  /* overflow: auto; */
+}
+
+.tournament-double-bracket-container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  min-width: fit-content;
+  padding: 10px 320px 30px 30px; /* extra right space for Winner above GF */
+  position: relative;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+}
+
+
+
+.tournament-double-right-round {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tournament-double-bracket-section {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.tournament-double-bracket-title { display: none; }
+
+.tournament-double-bracket-rounds {
+  display: flex;
+  gap: 120px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  min-height: 400px;
+}
+
+.tournament-double-round {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 220px;
+  gap: 40px;
+  position: relative;
+}
+
+/* Стили для Winner's bracket - убираем цветовое разделение */
+.tournament-double-winners-bracket {
+  padding-bottom: 30px;
+}
+
+.tournament-double-winners-bracket .tournament-double-bracket-title {
+  background: linear-gradient(90deg, #6bb6ff, #5aa5ef);
+  color: white;
+}
+
+/* Стили для Loser's bracket - те же цвета */
+.tournament-double-losers-bracket {
+  padding-bottom: 30px;
+}
+
+.tournament-double-losers-bracket .tournament-double-bracket-title {
+  background: linear-gradient(90deg, #6bb6ff, #5aa5ef);
+  color: white;
+}
+
+/* Стили для Grand Final - золотой остается */
+.tournament-double-grand-final-section {
+  border-bottom: 4px solid #FFD700;
+  padding-bottom: 20px;
+}
+
+.tournament-double-grand-final-section .tournament-double-bracket-title {
+  background: linear-gradient(90deg, #FFD700, #fbc02d);
+  color: #333;
+}
+
+.tournament-double-match-wrapper {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.tournament-double-match {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 180px;
+  min-height: 72px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.tournament-double-match:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.18); }
+
+.tournament-double-grand-final-match {
+  min-width: 220px;
+  min-height: 84px;
+  border: 2px solid #6bb6ff;
+  box-shadow: 0 8px 24px rgba(107, 182, 255, 0.25);
+}
+
+.tournament-double-winner-match {
+  min-width: 240px;
+  min-height: 88px;
+  border: 2px solid #ffd54f;
+  box-shadow: 0 8px 28px rgba(255, 215, 0, 0.35);
+  background: #fffef6;
+  position: relative;
+}
+
+/* Decorative stripe */
+.tournament-double-winner-match::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg, #ffe082, #ffd54f, #ffca28);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.tournament-double-team {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  background: #fff;
+  position: relative;
+}
+
+.tournament-double-team:not(:last-child) { border-bottom: 1px solid #efefef; }
+
+.tournament-double-team.winner { background: #f0f7ff; color: #1f5f99; }
+
+.tournament-double-team:hover { background: #f7faff; }
+
+.tournament-double-team-logo {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #e6e6e6;
+}
+
+.tournament-double-score {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 14px;
+  min-width: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.tournament-double-grand-final-wrapper,
+.tournament-double-winner-wrapper {
+  position: absolute;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Place Winner to the right of the upper bracket; Grand Final centered below for symmetry */
+.tournament-double-winner-wrapper { top: 18%; transform: translateY(-18%); }
+.tournament-double-grand-final-wrapper { top: 50%; transform: translateY(-50%); }
+
+.tournament-double-winners-bracket,
+.tournament-double-losers-bracket,
+.tournament-double-grand-final-section,
+.tournament-double-winner-section { padding-left: 0; border-left: 0; }
+
+.tournament-double-bracket-connector {
+  position: absolute;
+  background: #6bb6ff;
+  z-index: 1;
+}
+
+/* Status indicators */
+.tournament-double-bracket-section.pending {
+  opacity: 0.7;
+}
+
+.tournament-double-bracket-section.completed {
+  opacity: 1;
+}
+
+/* Animation for winners */
+@keyframes tournament-double-winner-glow {
+  0% { box-shadow: 0 0 5px rgba(107, 182, 255, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(107, 182, 255, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(107, 182, 255, 0.5); }
+}
+
+.tournament-double-team.winner { animation: none; }
+
+/* Winner card content centered and emphasized */
+.tournament-double-winner-match .tournament-double-team.winner {
+  background: #fffef6;
+  color: #916c00;
+  font-size: 16px;
+  padding: 16px 18px;
+}
+.tournament-double-winner-match .tournament-double-team-logo {
+  background: #fff;
+  border-color: #ffe082;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .tournament-double-bracket-rounds {
+    gap: 60px;
+  }
+  
+  .tournament-double-match {
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tournament-double-bracket-container {
+    gap: 30px;
+  }
+  
+  .tournament-double-bracket-rounds {
+    gap: 40px;
+    flex-direction: column;
+  }
+  
+  .tournament-double-match {
+    min-width: 140px;
+  }
+  
+  .tournament-double-team {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .tournament-double-bracket-title {
+    font-size: 1.2rem;
+  }
+  
+  .tournament-double-zoom-controls {
+    position: static;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tournament-double-bracket-wrapper {
+    padding: 16px;
+  }
+  
+  .tournament-double-bracket-rounds {
+    gap: 20px;
+  }
+  
+  .tournament-double-match {
+    min-width: 120px;
+  }
+  
+  .tournament-double-bracket-title {
+    font-size: 1rem;
+    padding: 8px;
+  }
+}
+
+/* Стили для коннекторов */
+.tournament-double-connector-vertical { position: absolute; background: #6bb6ff; width: 2px; z-index: 10; border-radius: 1px; opacity: 1; box-shadow: none; animation: none; }
+
+.tournament-double-connector-horizontal { position: absolute; background: #6bb6ff; height: 2px; z-index: 10; border-radius: 1px; opacity: 1; box-shadow: none; animation: none; }
+
+.tournament-double-connector-horizontal-bridge { position: absolute; background: #6bb6ff; height: 2px; z-index: 10; border-radius: 1px; opacity: 1; box-shadow: none; animation: none; }
+
+/* Анимации для коннекторов */
+@keyframes fadeInConnector {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes slideInConnector {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Стрелки на коннекторах - более крупные и заметные */
+.tournament-double-connector-horizontal::after,
+.tournament-double-connector-horizontal-bridge::after { content: none; }
+
+@keyframes pulseArrow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(107, 182, 255, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(107, 182, 255, 0.9));
+  }
+}
+
+/* Стили коннекторов для Winner's bracket - убираем разные цвета */
+.tournament-double-winners .tournament-double-connector-vertical,
+.tournament-double-winners .tournament-double-connector-horizontal,
+.tournament-double-winners .tournament-double-connector-horizontal-bridge { background: #6bb6ff; box-shadow: none; }
+
+.tournament-double-winners .tournament-double-connector-horizontal::after,
+.tournament-double-winners .tournament-double-connector-horizontal-bridge::after { content: none; }
+
+/* Стили коннекторов для Loser's bracket - те же цвета */
+.tournament-double-losers .tournament-double-connector-vertical,
+.tournament-double-losers .tournament-double-connector-horizontal,
+.tournament-double-losers .tournament-double-connector-horizontal-bridge { background: #6bb6ff; box-shadow: none; }
+
+.tournament-double-losers .tournament-double-connector-horizontal::after,
+.tournament-double-losers .tournament-double-connector-horizontal-bridge::after { content: none; }
+
+/* Коннекторы к финалу */
+.tournament-double-grand-final-connector { background: #6bb6ff !important; box-shadow: none !important; }
+
+/* Межбраккетные коннекторы (Winner's -> Loser's) - тот же цвет */
+.tournament-double-inter-bracket-connector {
+  position: absolute;
+  background: #6bb6ff;
+  width: 4px;
+  z-index: 15;
+  border-radius: 2px;
+  opacity: 0.9;
+  box-shadow: 0 0 10px rgba(107, 182, 255, 0.6);
+  animation: fadeInConnector 0.8s ease-out;
+}
+
+.tournament-double-inter-bracket-connector::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid #6bb6ff;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  filter: drop-shadow(0 0 4px rgba(107, 182, 255, 0.6));
+}
