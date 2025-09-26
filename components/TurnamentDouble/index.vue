@@ -5,7 +5,7 @@
       <button @click="zoomOut" class="tournament-double-zoom-btn tournament-double-zoom-minus">-</button>
       <span>Scale: {{ currentScale.toFixed(1) }}</span>
     </div>
-    
+
     <div class="tournament-double-bracket-scroll" :style="scaleStyle">
       <!-- Панель тестирования для локальных данных -->
       <div v-if="useLocalTeams" class="tournament-double-test-panel">
@@ -19,22 +19,22 @@
           <button @click="toggleDataSource" class="test-btn toggle">Переключить на API</button>
         </div>
       </div>
-      
+
       <div class="tournament-double-bracket-container" ref="bracketContainer">
-        
+
         <div class="tournament-double-bracket-section tournament-double-winners-bracket">
           <div class="tournament-double-bracket-rounds">
-            <div 
-              v-for="(round, roundIndex) in winnersRounds" 
-              :key="`wb-${roundIndex}`" 
-              class="tournament-double-round"
-              :class="`tournament-double-round-${roundIndex + 1}`"
-              :style="getRoundStyle(roundIndex, true)"
+            <div
+                v-for="(round, roundIndex) in winnersRounds"
+                :key="`wb-${roundIndex}`"
+                class="tournament-double-round"
+                :class="`tournament-double-round-${roundIndex + 1}`"
+                :style="getRoundStyle(roundIndex, true)"
             >
-              <div 
-                v-for="(match, matchIndex) in round" 
-                :key="`wb-match-${roundIndex}-${matchIndex}`"
-                class="tournament-double-match-wrapper"
+              <div
+                  v-for="(match, matchIndex) in round"
+                  :key="`wb-match-${roundIndex}-${matchIndex}`"
+                  class="tournament-double-match-wrapper"
               >
                 <div class="tournament-double-match" @click="openMatch(match)">
                   <div class="tournament-double-team" :class="{ winner: isWinner(match, 0) }">
@@ -58,22 +58,22 @@
         </div>
 
         <!-- Winners right rail: semifinal and final on the right side -->
-      
+
 
         <!-- Loser's Bracket -->
         <div class="tournament-double-bracket-section tournament-double-losers-bracket">
           <div class="tournament-double-bracket-rounds">
-            <div 
-              v-for="(round, roundIndex) in losersRounds" 
-              :key="`lb-${roundIndex}`" 
-              class="tournament-double-round"
-              :class="`tournament-double-round-${roundIndex + 1}`"
-              :style="getRoundStyle(roundIndex, false)"
+            <div
+                v-for="(round, roundIndex) in losersRounds"
+                :key="`lb-${roundIndex}`"
+                class="tournament-double-round"
+                :class="`tournament-double-round-${roundIndex + 1}`"
+                :style="getRoundStyle(roundIndex, false)"
             >
-              <div 
-                v-for="(match, matchIndex) in round" 
-                :key="`lb-match-${roundIndex}-${matchIndex}`"
-                class="tournament-double-match-wrapper"
+              <div
+                  v-for="(match, matchIndex) in round"
+                  :key="`lb-match-${roundIndex}-${matchIndex}`"
+                  class="tournament-double-match-wrapper"
               >
                 <div class="tournament-double-match" @click="openMatch(match)">
                   <div class="tournament-double-team" :class="{ winner: isWinner(match, 0) }">
@@ -150,8 +150,8 @@
         </div>
 
         <!-- Connectors for Winner's Bracket -->
-        <div v-for="connector in winnersConnectors.vertical" :key="connector.id" 
-             class="tournament-double-connector-vertical tournament-double-winners" 
+        <div v-for="connector in winnersConnectors.vertical" :key="connector.id"
+             class="tournament-double-connector-vertical tournament-double-winners"
              :style="{
                left: `${connector.left}px`,
                top: `${connector.top}px`,
@@ -160,7 +160,7 @@
         </div>
 
         <div v-for="connector in winnersConnectors.horizontal" :key="connector.id"
-             class="tournament-double-connector-horizontal-bridge tournament-double-winners" 
+             class="tournament-double-connector-horizontal-bridge tournament-double-winners"
              :style="{
                left: `${connector.left}px`,
                top: `${connector.top}px`,
@@ -179,7 +179,7 @@
         </div> -->
 
         <div v-for="connector in losersConnectors.horizontal" :key="connector.id"
-             class="tournament-double-connector-horizontal-bridge tournament-double-losers" 
+             class="tournament-double-connector-horizontal-bridge tournament-double-losers"
              :style="{
                left: `${connector.left}px`,
                top: `${connector.top}px`,
@@ -187,10 +187,10 @@
              }">
         </div>
 
-  
+
 
         <!-- Grand Final connectors -->
-        <div v-if="grandFinalConnector" 
+        <div v-if="grandFinalConnector"
              class="tournament-double-connector-horizontal-bridge"
              :style="{ 
                left: `${grandFinalConnector.left}px`, 
@@ -200,7 +200,7 @@
         </div>
 
         <!-- Losers Final -> Grand Final connectors (L-shape) -->
-        <div v-if="losersFinalStubConnector" 
+        <div v-if="losersFinalStubConnector"
              class="tournament-double-connector-horizontal-bridge"
              :style="{ 
                left: `${losersFinalStubConnector.left}px`, 
@@ -208,7 +208,7 @@
                width: `${losersFinalStubConnector.width}px` 
              }">
         </div>
-        <div v-if="losersFinalVerticalConnector" 
+        <div v-if="losersFinalVerticalConnector"
              class="tournament-double-connector-vertical"
              :style="{ 
                left: `${losersFinalVerticalConnector.left}px`, 
@@ -216,7 +216,7 @@
                height: `${losersFinalVerticalConnector.height}px` 
              }">
         </div>
-        <div v-if="losersFinalConnector" 
+        <div v-if="losersFinalConnector"
              class="tournament-double-connector-horizontal-bridge"
              :style="{ 
                left: `${losersFinalConnector.left}px`, 
@@ -225,18 +225,18 @@
              }">
         </div>
 
-     <!-- Grand Final 1 -> Reset connector -->
-     <div v-if="grandFinalResetConnector" 
-       class="tournament-double-connector-horizontal-bridge"
-       :style="{ 
+        <!-- Grand Final 1 -> Reset connector -->
+        <div v-if="grandFinalResetConnector"
+             class="tournament-double-connector-horizontal-bridge"
+             :style="{
       left: `${grandFinalResetConnector.left}px`, 
       top: `${grandFinalResetConnector.top}px`, 
       width: `${grandFinalResetConnector.width}px` 
        }">
-     </div>
+        </div>
 
         <!-- Winner connector -->
-        <div v-if="winnerConnector" 
+        <div v-if="winnerConnector"
              class="tournament-double-connector-horizontal-bridge"
              :style="{ 
                left: `${winnerConnector.left}px`, 
@@ -245,42 +245,43 @@
              }">
         </div>
 
-     <!-- Inter-bracket vertical connectors (WB -> LB) -->
-     <div v-for="connector in interBracketConnectors" :key="connector.id" 
-       class="tournament-double-connector-vertical tournament-double-winners"
-       :style="{ left: `${connector.left}px`, top: `${connector.top}px`, height: `${connector.height}px` }">
-     </div>
+        <!-- Inter-bracket vertical connectors (WB -> LB) -->
+        <div v-for="connector in interBracketConnectors" :key="connector.id"
+             class="tournament-double-connector-vertical tournament-double-winners"
+             :style="{ left: `${connector.left}px`, top: `${connector.top}px`, height: `${connector.height}px` }">
+        </div>
       </div>
     </div>
-  </div>
 
-  <div v-if="showMatchPopup" class="match-popup-overlay" @click="showMatchPopup=false">
-    <div class="match-popup" @click.stop>
-      <div class="match-popup-header">
-        <h3>{{ isMatchStarted ? 'Управление матчем' : 'Матч еще не начался' }}</h3>
-        <button @click="showMatchPopup=false" class="close-btn">×</button>
-      </div>
-      <div class="match-popup-content">
-        <div class="match-info">
-          <div class="match-teams">
-            <div class="team"><span class="team-name">{{ selectedMatch?.team1?.name || 'Команда 1' }}</span></div>
-            <div class="vs">VS</div>
-            <div class="team"><span class="team-name">{{ selectedMatch?.team2?.name || 'Команда 2' }}</span></div>
-          </div>
-          <div v-if="isMatchStarted" class="match-status">
-            <span class="status-label">Статус:</span>
-            <span class="status-value" :class="getStatusClass(selectedMatch?.status)">{{ getStatusText(selectedMatch?.status) }}</span>
-          </div>
-          <div v-else class="match-notification">
-            <p>Матч еще не начался. Вы сможете просмотреть подробную информацию после начала матча.</p>
-          </div>
+    <!-- Match Popup -->
+    <div v-if="showMatchPopup" class="match-popup-overlay" @click="showMatchPopup=false">
+      <div class="match-popup" @click.stop>
+        <div class="match-popup-header">
+          <h3>{{ isMatchStarted ? 'Управление матчем' : 'Матч еще не начался' }}</h3>
+          <button @click="showMatchPopup=false" class="close-btn">×</button>
         </div>
-        <div v-if="isMatchStarted || adminControls" class="match-controls">
-          <button v-if="canStartMatch" @click="startMatch" :disabled="isLoading" class="control-btn start-btn">{{ isLoading ? 'Запуск...' : 'Запустить матч' }}</button>
-          <button v-if="canStopMatch" @click="stopMatch" :disabled="isLoading" class="control-btn stop-btn">{{ isLoading ? 'Остановка...' : 'Остановить матч' }}</button>
-          <button @click="refreshMatchStatus" :disabled="isLoading" class="control-btn refresh-btn">{{ isLoading ? 'Обновление...' : 'Обновить статус' }}</button>
+        <div class="match-popup-content">
+          <div class="match-info">
+            <div class="match-teams">
+              <div class="team"><span class="team-name">{{ selectedMatch?.team1?.name || 'Команда 1' }}</span></div>
+              <div class="vs">VS</div>
+              <div class="team"><span class="team-name">{{ selectedMatch?.team2?.name || 'Команда 2' }}</span></div>
+            </div>
+            <div v-if="isMatchStarted" class="match-status">
+              <span class="status-label">Статус:</span>
+              <span class="status-value" :class="getStatusClass(selectedMatch?.status)">{{ getStatusText(selectedMatch?.status) }}</span>
+            </div>
+            <div v-else class="match-notification">
+              <p>Матч еще не начался. Вы сможете просмотреть подробную информацию после начала матча.</p>
+            </div>
+          </div>
+          <div v-if="isMatchStarted || adminControls" class="match-controls">
+            <button v-if="canStartMatch" @click="startMatch" :disabled="isLoading" class="control-btn start-btn">{{ isLoading ? 'Запуск...' : 'Запустить матч' }}</button>
+            <button v-if="canStopMatch" @click="stopMatch" :disabled="isLoading" class="control-btn stop-btn">{{ isLoading ? 'Остановка...' : 'Остановить матч' }}</button>
+            <button @click="refreshMatchStatus" :disabled="isLoading" class="control-btn refresh-btn">{{ isLoading ? 'Обновление...' : 'Обновить статус' }}</button>
+          </div>
+          <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
         </div>
-        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       </div>
     </div>
   </div>
@@ -427,7 +428,7 @@ function normalizeDoubleElimBracket(res) {
   // Handle nested data structure
   const bracketNode = (res && (res.data?.bracket || res.bracket)) || null
   const tournamentNode = (res && (res.data?.tournament || res.tournament)) || null
-  
+
   if (tournamentNode?.winner) {
     bracketMeta.value.winner = normalizeTeam(tournamentNode.winner)
   }
@@ -437,17 +438,17 @@ function normalizeDoubleElimBracket(res) {
 
   if (bracketNode && bracketNode.rounds) {
     const rounds = bracketNode.rounds
-    
+
     // Handle object format with round names
     if (rounds && typeof rounds === 'object') {
-  const winnersRounds = []
-  const losersRounds = []
-  let grandFinal = null
-  let grandFinalReset = null
+      const winnersRounds = []
+      const losersRounds = []
+      let grandFinal = null
+      let grandFinalReset = null
 
       // Sort rounds by typical double elimination order
       const entries = Object.entries(rounds)
-      
+
       for (const [roundName, matches] of entries) {
         const normalizedMatches = (Array.isArray(matches) ? matches : []).map(m => ({
           ...m,
@@ -470,12 +471,12 @@ function normalizeDoubleElimBracket(res) {
         }
       }
 
-      return { 
-        winnersRounds, 
-        losersRounds, 
-        grandFinal, 
+      return {
+        winnersRounds,
+        losersRounds,
+        grandFinal,
         grandFinalReset,
-        teams: res.teams || [] 
+        teams: res.teams || []
       }
     }
   }
@@ -485,7 +486,7 @@ function normalizeDoubleElimBracket(res) {
 }
 
 // Generate double-elimination bracket with adaptive team count (like single elimination)
-function highestPowerOfTwoLE(n) { 
+function highestPowerOfTwoLE(n) {
   let p = 1
   while (p * 2 <= n) { p *= 2 }
   return p
@@ -501,7 +502,7 @@ function generateSampleDoubleElimination() {
 function generateDoubleEliminationWithPrelims(teams) {
   const n = Array.isArray(teams) ? teams.length : 0
   if (n === 0) return { winnersRounds: [], losersRounds: [], grandFinal: null, grandFinalReset: null, teams: [] }
-  
+
   const base = highestPowerOfTwoLE(n)
   const prelimMatches = n - base
   const prelimTeamsCount = prelimMatches * 2
@@ -512,7 +513,7 @@ function generateDoubleEliminationWithPrelims(teams) {
   const prelimTeams = teams.slice(byesCount)
 
   const winnersRounds = []
-  
+
   // Preliminary round for Winner's bracket (if needed)
   if (prelimMatches > 0) {
     const r0 = []
@@ -550,8 +551,8 @@ function generateDoubleEliminationWithPrelims(teams) {
   let matches = r1.length
   while (matches > 1) {
     const round = []
-    for (let i = 0; i < matches; i += 2) { 
-      round.push({ team1: {}, team2: {} }) 
+    for (let i = 0; i < matches; i += 2) {
+      round.push({ team1: {}, team2: {} })
     }
     winnersRounds.push(round)
     matches = Math.floor(matches / 2)
@@ -560,7 +561,7 @@ function generateDoubleEliminationWithPrelims(teams) {
   // Generate Loser's bracket (simpler structure)
   const losersRounds = []
   let losersMatches = Math.floor(base / 2) // Start with half the teams
-  
+
   while (losersMatches > 0) {
     const round = []
     for (let i = 0; i < losersMatches; i++) {
@@ -615,7 +616,7 @@ async function fetchBracket() {
     setTimeout(calculateConnectors, 50)
     return
   }
-  
+
   // Если используем локальные команды, генерируем сетку из них
   if (useLocalTeams.value) {
     const teams = getTeams()
@@ -626,7 +627,7 @@ async function fetchBracket() {
     }
     return
   }
-  
+
   if (!props.endpoint && !props.tournamentId) return
 
   pending.value = true
@@ -634,7 +635,7 @@ async function fetchBracket() {
   try {
     const url = props.endpoint || `${API_BASE}/tournaments/${props.tournamentId}/bracket/`
     const res = await $fetch(url, { credentials: 'include' })
-    
+
     // Generate adaptive bracket from API response
     const normalizedData = normalizeDoubleElimBracket(res)
     if (normalizedData.teams && normalizedData.teams.length > 0) {
@@ -642,7 +643,7 @@ async function fetchBracket() {
     } else {
       tournamentData.value = normalizedData
     }
-    
+
     await nextTick()
     setTimeout(calculateConnectors, 50)
   } catch (e) {
@@ -676,7 +677,7 @@ const winnerTeam = computed(() => {
   if (bracketMeta.value?.winner && (bracketMeta.value.winner.name || bracketMeta.value.winner.logo)) {
     return bracketMeta.value.winner
   }
-  
+
   // If reset played, its winner is champion
   const gfReset = grandFinalReset.value
   if (shouldShowGrandFinalReset.value && gfReset) {
@@ -691,16 +692,16 @@ const winnerTeam = computed(() => {
 
   const gf = grandFinal.value
   if (!gf) return null
-  
+
   if (gf.winner) {
     if (gf.winner === gf.team1?.name) return gf.team1
     if (gf.winner === gf.team2?.name) return gf.team2
   }
-  
+
   if (gf.team1_score !== undefined && gf.team2_score !== undefined) {
     return gf.team1_score > gf.team2_score ? gf.team1 : gf.team2
   }
-  
+
   return null
 })
 
@@ -725,17 +726,17 @@ const teamName = (t) => hasTeam(t) ? (t.name || '—') : 'ожидание'
 
 const isWinner = (match, teamIndex) => {
   if (!match) return false
-  
+
   if (match.winner) {
     const teamName = teamIndex === 0 ? match.team1?.name : match.team2?.name
     return match.winner === teamName
   }
-  
+
   if (match.team1_score !== undefined && match.team2_score !== undefined) {
     if (teamIndex === 0) return match.team1_score > match.team2_score
     else return match.team2_score > match.team1_score
   }
-  
+
   return false
 }
 
@@ -803,13 +804,13 @@ const calculateConnectors = async () => {
 
   // Рассчитываем коннекторы для Winner's Bracket
   calculateBracketConnectors('winners', winnersConnectors.value, containerRect)
-  
+
   // Рассчитываем коннекторы для Loser's Bracket
   calculateBracketConnectors('losers', losersConnectors.value, containerRect)
-  
+
   // Рассчитываем межбраккетные коннекторы
   calculateInterBracketConnectors(containerRect)
-  
+
   // Сначала позиционируем правые блоки по центру верхней сетки
   positionRightRailBlocks(containerRect)
   await nextTick()
@@ -823,7 +824,7 @@ function calculateBracketConnectors(bracketType, connectors, containerRect) {
   if (!bracketSection) return
 
   const rounds = safeQuerySelectorAll(bracketSection, '.tournament-double-round')
-  
+
   rounds.forEach((round, roundIndex) => {
     if (roundIndex === rounds.length - 1) return // Последний раунд не имеет исходящих коннекторов
 
@@ -939,31 +940,31 @@ function createDirectConnector(match, nextMatch, connectors, containerRect) {
 function calculateInterBracketConnectors(containerRect) {
   const winnersSection = bracketContainer.value.querySelector('.tournament-double-winners-bracket')
   const losersSection = bracketContainer.value.querySelector('.tournament-double-losers-bracket')
-  
+
   if (!winnersSection || !losersSection) return
 
   // Простая логика: соединяем только финалиста Winner's bracket с началом Loser's bracket
   const winnersRounds = winnersSection.querySelectorAll('.tournament-double-round')
   const losersRounds = losersSection.querySelectorAll('.tournament-double-round')
-  
+
   if (winnersRounds.length > 0 && losersRounds.length > 0) {
     // Берем последний раунд Winner's (финалиста)
     const lastWinnersRound = winnersRounds[winnersRounds.length - 1]
     const winnerMatch = lastWinnersRound.querySelector('.tournament-double-match')
-    
+
     // Берем первый раунд Loser's (куда попадает проигравший финалист)
     const firstLosersRound = losersRounds[0]
     const firstLosersMatch = firstLosersRound.querySelector('.tournament-double-match')
-    
+
     if (winnerMatch && firstLosersMatch) {
       const winnersRect = winnerMatch.getBoundingClientRect()
       const losersRect = firstLosersMatch.getBoundingClientRect()
-      
+
       // Создаем вертикальную линию от Winner's к Loser's
       const x = winnersRect.left + winnersRect.width / 2 - containerRect.left - 2
       const y1 = winnersRect.bottom - containerRect.top + 15
       const y2 = losersRect.top - containerRect.top - 15
-      
+
       if (y2 > y1) {
         interBracketConnectors.value.push({
           id: `winner-to-loser`,
@@ -982,7 +983,7 @@ function calculateGrandFinalConnectors(containerRect) {
     const winnersSection = bracketContainer.value.querySelector('.tournament-double-winners-bracket')
     const losersSection = bracketContainer.value.querySelector('.tournament-double-losers-bracket')
     const gfBlock = grandFinalBlock.value
-    
+
     if (!gfBlock) return
     // clear previous right-rail connectors
     grandFinalConnector.value = null
@@ -995,47 +996,47 @@ function calculateGrandFinalConnectors(containerRect) {
     // Use actual target GF card rect (Reset if visible else GF1)
     const gf1El = gfBlock.querySelector('.tournament-double-grand-final-match')
     const targetRect = (grandFinalResetBlock.value && shouldShowGrandFinalReset.value)
-      ? grandFinalResetBlock.value.getBoundingClientRect()
-      : (gf1El ? gf1El.getBoundingClientRect() : gfBlock.getBoundingClientRect())
+        ? grandFinalResetBlock.value.getBoundingClientRect()
+        : (gf1El ? gf1El.getBoundingClientRect() : gfBlock.getBoundingClientRect())
     const gfRect = targetRect
 
-  // Коннектор от Winner's bracket
+    // Коннектор от Winner's bracket
     if (winnersSection) {
       const winnersRounds = winnersSection.querySelectorAll('.tournament-double-round')
       const lastWinnersRound = winnersRounds[winnersRounds.length - 1]
       const lastWinnersMatch = lastWinnersRound?.querySelector('.tournament-double-match')
-      
+
       if (lastWinnersMatch) {
         const wmRect = lastWinnersMatch.getBoundingClientRect()
         const x = wmRect.right - containerRect.left + 50
         const y = wmRect.top + wmRect.height / 2 - containerRect.top
         const width = gfRect.left - containerRect.left - x
-        
+
         if (width > 0) {
           grandFinalConnector.value = { left: x, top: y - 1, width: width }
         }
       }
     }
 
-  // Коннектор от Loser's bracket (финал нижней сетки -> Grand Final) — L-образный подъем
-  if (losersSection) {
+    // Коннектор от Loser's bracket (финал нижней сетки -> Grand Final) — L-образный подъем
+    if (losersSection) {
       const losersRounds = losersSection.querySelectorAll('.tournament-double-round')
       const lastLosersRound = losersRounds[losersRounds.length - 1]
       const lastLosersMatch = lastLosersRound?.querySelector('.tournament-double-match')
       if (lastLosersMatch) {
         const lmRect = lastLosersMatch.getBoundingClientRect()
-    const yLB = lmRect.top + lmRect.height / 2 - containerRect.top
-    const yGF = gfRect.top + gfRect.height / 2 - containerRect.top
-    const stubStart = lmRect.right - containerRect.left
-  const stubLen = 36
-    const x = stubStart + stubLen
-    losersFinalStubConnector.value = { left: stubStart, top: yLB - 1, width: stubLen }
-    losersFinalVerticalConnector.value = { left: x, top: Math.min(yLB, yGF), height: Math.abs(yGF - yLB) }
-    const width = gfRect.left - containerRect.left - x
-    losersFinalConnector.value = width > 0 ? { left: x, top: yGF - 1, width } : null
+        const yLB = lmRect.top + lmRect.height / 2 - containerRect.top
+        const yGF = gfRect.top + gfRect.height / 2 - containerRect.top
+        const stubStart = lmRect.right - containerRect.left
+        const stubLen = 36
+        const x = stubStart + stubLen
+        losersFinalStubConnector.value = { left: stubStart, top: yLB - 1, width: stubLen }
+        losersFinalVerticalConnector.value = { left: x, top: Math.min(yLB, yGF), height: Math.abs(yGF - yLB) }
+        const width = gfRect.left - containerRect.left - x
+        losersFinalConnector.value = width > 0 ? { left: x, top: yGF - 1, width } : null
       }
     }
-    
+
     // Коннектор к Winner (prefer GF reset if shown)
     const wBlock = winnerBlock.value
     if (wBlock) {
@@ -1043,7 +1044,7 @@ function calculateGrandFinalConnectors(containerRect) {
       const x = gfRect.right - containerRect.left + 50
       const y = gfRect.top + gfRect.height / 2 - containerRect.top
       const width = wRect.left - containerRect.left - x
-      
+
       if (width > 0) {
         winnerConnector.value = { left: x, top: y - 1, width: width }
       }
@@ -1065,8 +1066,8 @@ function calculateGrandFinalConnectors(containerRect) {
     console.warn('Error calculating grand final connectors:', error)
     grandFinalConnector.value = null
     losersFinalConnector.value = null
-  losersFinalStubConnector.value = null
-  losersFinalVerticalConnector.value = null
+    losersFinalStubConnector.value = null
+    losersFinalVerticalConnector.value = null
     winnerConnector.value = null
     grandFinalResetConnector.value = null
   }
@@ -1101,7 +1102,7 @@ watch(() => props.data, () => {
   if (props.data) {
     tournamentData.value = normalizeDoubleElimBracket(props.data)
   } else {
-  tournamentData.value = { winnersRounds: [], losersRounds: [], grandFinal: null, grandFinalReset: null, teams: [] }
+    tournamentData.value = { winnersRounds: [], losersRounds: [], grandFinal: null, grandFinalReset: null, teams: [] }
   }
   nextTick(() => { setTimeout(calculateConnectors, 50) })
 }, { deep: true })
